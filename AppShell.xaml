@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="GroceryMate.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:GroceryMate.Views"
+    Title="GroceryMate">
+
+    <ShellContent
+        Route="login"
+        ContentTemplate="{DataTemplate views:LoginPage}" />
+
+    <ShellContent
+        Route="signup"
+        ContentTemplate="{DataTemplate views:SignupPage}" />
+
+    <TabBar Route="main">
+        <ShellContent
+            Title="Products"
+            ContentTemplate="{DataTemplate views:ProductsPage}" />
+
+        <ShellContent
+            Title="Grocery List"
+            ContentTemplate="{DataTemplate views:GroceryListPage}" />
+
+        <ShellContent
+            Title="Compare"
+            ContentTemplate="{DataTemplate views:PriceComparePage}" />
+    </TabBar>
+</Shell>

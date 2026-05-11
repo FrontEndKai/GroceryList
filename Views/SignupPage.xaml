@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GroceryMate.Views.SignupPage"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:viewmodel="clr-namespace:GroceryMate.ViewModels"
+             x:DataType="viewmodel:SignupViewModel"
+             Shell.NavBarIsVisible="False"
+             Shell.TabBarIsVisible="False"
+             BackgroundColor="{StaticResource Cream}">
+    <ContentPage.Behaviors>
+        <toolkit:AnimationBehavior EventName="Loaded">
+            <toolkit:AnimationBehavior.Animation>
+                <toolkit:FadeAnimation Opacity="1" Duration="500"/>
+            </toolkit:AnimationBehavior.Animation>
+        </toolkit:AnimationBehavior>
+    </ContentPage.Behaviors>
+
+    <Grid RowDefinitions="Auto,*" Padding="24" Background="{StaticResource HeroGradient}">
+        <VerticalStackLayout Spacing="10">
+            <Label Text="Create account" Style="{StaticResource HeroTitle}" />
+            <Label Text="Save lists and compare prices fast." Style="{StaticResource HeroSubTitle}" />
+            <HorizontalStackLayout Spacing="8">
+                <Label Text="Secure" Style="{StaticResource ChipLabel}" />
+                <Label Text="Easy" Style="{StaticResource TagLabel}" />
+                <Label Text="Fast" Style="{StaticResource ChipLabel}" />
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+
+        <Border Grid.Row="1" Style="{StaticResource HeroCard}" Margin="0,22,0,0">
+            <Border.Behaviors>
+                <toolkit:AnimationBehavior EventName="Loaded">
+                    <toolkit:AnimationBehavior.Animation>
+                        <toolkit:FadeInAnimation Duration="600" Delay="100"/>
+                    </toolkit:AnimationBehavior.Animation>
+                </toolkit:AnimationBehavior>
+            </Border.Behaviors>
+            <VerticalStackLayout Spacing="14">
+                <Label Text="Join GroceryMate" Style="{StaticResource SectionTitle}" />
+                <Border Style="{StaticResource InputCard}">
+                    <Border.Behaviors>
+                        <toolkit:AnimationBehavior EventName="Loaded">
+                            <toolkit:AnimationBehavior.Animation>
+                                <toolkit:FadeInAnimation Duration="600" Delay="200"/>
+                            </toolkit:AnimationBehavior.Animation>
+                        </toolkit:AnimationBehavior>
+                    </Border.Behaviors>
+                    <Entry Placeholder="Email" Keyboard="Email" Text="{Binding Email}" Style="{StaticResource InputEntry}" />
+                </Border>
+                <Border Style="{StaticResource InputCard}">
+                    <Border.Behaviors>
+                        <toolkit:AnimationBehavior EventName="Loaded">
+                            <toolkit:AnimationBehavior.Animation>
+                                <toolkit:FadeInAnimation Duration="600" Delay="300"/>
+                            </toolkit:AnimationBehavior.Animation>
+                        </toolkit:AnimationBehavior>
+                    </Border.Behaviors>
+                    <Entry Placeholder="Password" IsPassword="True" Text="{Binding Password}" Style="{StaticResource InputEntry}" />
+                </Border>
+                <Border Style="{StaticResource InputCard}">
+                    <Border.Behaviors>
+                        <toolkit:AnimationBehavior EventName="Loaded">
+                            <toolkit:AnimationBehavior.Animation>
+                                <toolkit:FadeInAnimation Duration="600" Delay="400"/>
+                            </toolkit:AnimationBehavior.Animation>
+                        </toolkit:AnimationBehavior>
+                    </Border.Behaviors>
+                    <Entry Placeholder="Confirm password" IsPassword="True" Text="{Binding ConfirmPassword}" Style="{StaticResource InputEntry}" />
+                </Border>
+                <Label Text="{Binding ErrorMessage}" TextColor="{StaticResource Tomato}" IsVisible="{Binding HasError}" />
+
+                <Button Text="Sign up" Command="{Binding SignUpCommand}" Style="{StaticResource PrimaryButton}">
+                    <Button.Behaviors>
+                        <toolkit:AnimationBehavior EventName="Loaded">
+                            <toolkit:AnimationBehavior.Animation>
+                                <toolkit:FadeInAnimation Duration="600" Delay="500"/>
+                            </toolkit:AnimationBehavior.Animation>
+                        </toolkit:AnimationBehavior>
+                    </Button.Behaviors>
+                </Button>
+                <Button Text="Back to login" Command="{Binding GoToLoginCommand}" Style="{StaticResource GhostButton}">
+                    <Button.Behaviors>
+                        <toolkit:AnimationBehavior EventName="Loaded">
+                            <toolkit:AnimationBehavior.Animation>
+                                <toolkit:FadeInAnimation Duration="600" Delay="600"/>
+                            </toolkit:AnimationBehavior.Animation>
+                        </toolkit:AnimationBehavior>
+                    </Button.Behaviors>
+                </Button>
+            </VerticalStackLayout>
+        </Border>
+    </Grid>
+</ContentPage>

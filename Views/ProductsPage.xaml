@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:m="clr-namespace:GroceryMate.Models"
+             xmlns:vm="clr-namespace:GroceryMate.ViewModels"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="GroceryMate.Views.ProductsPage"
+             x:DataType="vm:ProductsViewModel"
+             Title="Products">
+    <ContentPage.Behaviors>
+        <toolkit:AnimationBehavior EventName="Loaded">
+            <toolkit:AnimationBehavior.Animation>
+                <toolkit:FadeAnimation Opacity="1" Duration="500"/>
+            </toolkit:AnimationBehavior.Animation>
+        </toolkit:AnimationBehavior>
+    </ContentPage.Behaviors>
+    <Grid RowDefinitions="Auto, Auto, *">
+        <Border Grid.Row="0" Style="{StaticResource HeroCard}">
+            <Border.Behaviors>
+                <toolkit:AnimationBehavior EventName="Loaded">
+                    <toolkit:AnimationBehavior.Animation>
+                        <toolkit:FadeInAnimation Duration="600" Delay="100"/>
+                    </toolkit:AnimationBehavior.Animation>
+                </toolkit:AnimationBehavior>
+            </Border.Behaviors>
+            <VerticalStackLayout Spacing="8">
+                <Label Text="Fresh picks" Style="{StaticResource DisplayTitle}" />
+                <Button Grid.Column="1" Text="Add product" Command="{Binding AddProductCommand}" Style="{StaticResource PrimaryButton}" />
+                <Label Grid.Row="1" Text="Curated essentials and seasonal highlights." Style="{StaticResource HeroSubTitle}" />
+            </VerticalStackLayout>
+        </Border>
+
+        <Border Grid.Row="1" Style="{StaticResource SurfaceCard}" Margin="20,0">
+            <Border.Behaviors>
+                <toolkit:AnimationBehavior EventName="Loaded">
+                    <toolkit:AnimationBehavior.Animation>
+                        <toolkit:FadeInAnimation Duration="600" Delay="200"/>
+                    </toolkit:AnimationBehavior.Animation>
+                </toolkit:AnimationBehavior>
+            </Border.Behaviors>
+            <SearchBar Placeholder="Search for products..." Text="{Binding SearchText}" />
+        </Border>
+
+        <CollectionView Grid.Row="2" ItemsSource="{Binding Products}" SelectionMode="None" Margin="0,12,0,0">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:Product">
+                    <Grid Padding="10">
+                        <Border Style="{StaticResource ProductCard}">
+                            <Border.Behaviors>
+                                <toolkit:AnimationBehavior EventName="Loaded">
+                                    <toolkit:AnimationBehavior.Animation>
+                                        <toolkit:FadeInAnimation Duration="500" Delay="300"/>
+                                    </toolkit:AnimationBehavior.Animation>
+                                </toolkit:AnimationBehavior>
+                            </Border.Behaviors>
+                            <StackLayout Spacing="8">
+                                <Image Source="{Binding ImageUrl}" HeightRequest="120" Aspect="AspectFill" />
+                                <VerticalStackLayout Spacing="8">
+                                    <Label Text="{Binding Category}" Style="{StaticResource ChipLabel}" />
+                                    <Label Text="{Binding Store}" Style="{StaticResource TagLabel}" />
+                                </VerticalStackLayout>
+                                <Label Grid.Row="1" Text="{Binding Name}" FontFamily="OpenSansSemibold" FontSize="16" TextColor="{StaticResource Soil}" />
+                                <Grid Grid.Row="2" ColumnDefinitions="*,Auto" RowSpacing="6">
+                                    <Label Text="{Binding Price, StringFormat='${0:0.00}'}" Style="{StaticResource PriceLabel}" />
+                                    <Label Grid.Column="1" Text="{Binding Unit}" Style="{StaticResource CaptionLabel}" />
+                                    <HorizontalStackLayout Grid.Row="1" Grid.ColumnSpan="2" Spacing="8">
+                                        <Button Text="View" Style="{StaticResource QuietPillButton}"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ProductsViewModel}}, Path=GoToDetailsCommand}"
+                                                CommandParameter="{Binding .}" />
+                                        <Button Text="Add" Style="{StaticResource PrimaryPillButton}"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ProductsViewModel}}, Path=AddToListCommand}"
+                                                CommandParameter="{Binding .}" />
+                                    </HorizontalStackLayout>
+                                </Grid>
+                            </StackLayout>
+                        </Border>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

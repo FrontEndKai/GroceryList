@@ -1,0 +1,81 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:m="clr-namespace:GroceryMate.Models"
+             xmlns:vm="clr-namespace:GroceryMate.ViewModels"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="GroceryMate.Views.GroceryListPage"
+             x:DataType="vm:GroceryListViewModel"
+             Title="Grocery List"
+             BackgroundColor="{StaticResource Cream}">
+    <ContentPage.Behaviors>
+        <toolkit:AnimationBehavior EventName="Loaded">
+            <toolkit:AnimationBehavior.Animation>
+                <toolkit:FadeAnimation Opacity="1" Duration="500"/>
+            </toolkit:AnimationBehavior.Animation>
+        </toolkit:AnimationBehavior>
+    </ContentPage.Behaviors>
+    <Grid RowDefinitions="Auto, *, Auto">
+        <Border Grid.Row="0" Style="{StaticResource HeroCard}">
+            <Border.Behaviors>
+                <toolkit:AnimationBehavior EventName="Loaded">
+                    <toolkit:AnimationBehavior.Animation>
+                        <toolkit:FadeInAnimation Duration="600" Delay="100"/>
+                    </toolkit:AnimationBehavior.Animation>
+                </toolkit:AnimationBehavior>
+            </Border.Behaviors>
+            <VerticalStackLayout Spacing="8">
+                <Label Text="Your List" Style="{StaticResource DisplayTitle}" />
+                <Label Grid.Column="1" Text="{Binding TotalCost, StringFormat='${0:0.00}'}" Style="{StaticResource MetricLabel}" />
+                <Label Grid.Row="1" Grid.ColumnSpan="2" Text="Tap items to adjust quantities." Style="{StaticResource HeroSubTitle}" />
+            </VerticalStackLayout>
+        </Border>
+
+        <CollectionView Grid.Row="1" ItemsSource="{Binding Items}" SelectionMode="None" Margin="10,0">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:GroceryItem">
+                    <Border Style="{StaticResource SurfaceCard}" Padding="12" Margin="10,5">
+                        <Border.Behaviors>
+                            <toolkit:AnimationBehavior EventName="Loaded">
+                                <toolkit:AnimationBehavior.Animation>
+                                    <toolkit:FadeInAnimation Duration="500" Delay="200"/>
+                                </toolkit:AnimationBehavior.Animation>
+                            </toolkit:AnimationBehavior>
+                        </Border.Behaviors>
+                        <Grid ColumnDefinitions="Auto, *, Auto">
+                            <CheckBox IsChecked="{Binding IsComplete}" Color="{StaticResource Primary}" />
+                            <Label Grid.Column="1"
+                                       Text="{Binding Quantity, StringFormat='{0}x'}"
+                                       Style="{StaticResource ChipLabel}"
+                                       VerticalOptions="Center"
+                                       Margin="0,0,12,0"/>
+
+                            <Button Grid.Column="2"
+                                        Text="Remove"
+                                        Style="{StaticResource QuietPillButton}"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:GroceryListViewModel}}, Path=RemoveItemCommand}"
+                                        CommandParameter="{Binding .}"/>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Border Grid.Row="2" Style="{StaticResource SurfaceCard}" Margin="20" Padding="16">
+            <Border.Behaviors>
+                <toolkit:AnimationBehavior EventName="Loaded">
+                    <toolkit:AnimationBehavior.Animation>
+                        <toolkit:FadeInAnimation Duration="600" Delay="300"/>
+                    </toolkit:AnimationBehavior.Animation>
+                </toolkit:AnimationBehavior>
+            </Border.Behaviors>
+            <Grid ColumnDefinitions="*,Auto">
+                <Label Style="{StaticResource SectionTitle}" VerticalOptions="Center">
+                    <Label.Text>
+                        <StaticResource Name="AddNewProduct" />
+                    </Label.Text>
+                </Label>
+                <Button Grid.Column="1" Text="Clear List" Command="{Binding ClearListCommand}" Style="{StaticResource PrimaryButton}" />
+            </Grid>
+        </Border>
+    </Grid>
+</ContentPage>
