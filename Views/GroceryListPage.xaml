@@ -9,18 +9,18 @@
              BackgroundColor="{StaticResource Cream}">
     <ContentPage.Behaviors>
         <toolkit:AnimationBehavior EventName="Loaded">
-            <toolkit:AnimationBehavior.Animation>
-                <toolkit:FadeAnimation Opacity="1" Duration="500"/>
-            </toolkit:AnimationBehavior.Animation>
+            <toolkit:AnimationBehavior.AnimationType>
+                <toolkit:FadeAnimation Opacity="1" Length="500"/>
+            </toolkit:AnimationBehavior.AnimationType>
         </toolkit:AnimationBehavior>
     </ContentPage.Behaviors>
     <Grid RowDefinitions="Auto, *, Auto">
         <Border Grid.Row="0" Style="{StaticResource HeroCard}">
             <Border.Behaviors>
                 <toolkit:AnimationBehavior EventName="Loaded">
-                    <toolkit:AnimationBehavior.Animation>
-                        <toolkit:FadeInAnimation Duration="600" Delay="100"/>
-                    </toolkit:AnimationBehavior.Animation>
+                    <toolkit:AnimationBehavior.AnimationType>
+                        <toolkit:FadeAnimation Opacity="1" Length="600"/>
+                    </toolkit:AnimationBehavior.AnimationType>
                 </toolkit:AnimationBehavior>
             </Border.Behaviors>
             <VerticalStackLayout Spacing="8">
@@ -32,27 +32,26 @@
 
         <CollectionView Grid.Row="1" ItemsSource="{Binding Items}" SelectionMode="None" Margin="10,0">
             <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="model:GroceryItem">
+                <DataTemplate x:DataType="m:GroceryItem">
                     <Border Style="{StaticResource SurfaceCard}" Padding="12" Margin="10,5">
                         <Border.Behaviors>
                             <toolkit:AnimationBehavior EventName="Loaded">
-                                <toolkit:AnimationBehavior.Animation>
-                                    <toolkit:FadeInAnimation Duration="500" Delay="200"/>
-                                </toolkit:AnimationBehavior.Animation>
+                                <toolkit:AnimationBehavior.AnimationType>
+                                    <toolkit:FadeAnimation Opacity="1" Length="500"/>
+                                </toolkit:AnimationBehavior.AnimationType>
                             </toolkit:AnimationBehavior>
                         </Border.Behaviors>
                         <Grid ColumnDefinitions="Auto, *, Auto">
-                            <CheckBox IsChecked="{Binding IsComplete}" Color="{StaticResource Primary}" />
-                            <Label Grid.Column="1"
-                                       Text="{Binding Quantity, StringFormat='{0}x'}"
-                                       Style="{StaticResource ChipLabel}"
-                                       VerticalOptions="Center"
-                                       Margin="0,0,12,0"/>
+                            <CheckBox IsChecked="{Binding IsChecked}" Color="{StaticResource Primary}" />
+                            <VerticalStackLayout Grid.Column="1" Spacing="4" VerticalOptions="Center">
+                                <Label Text="{Binding Product.Name}" Style="{StaticResource BodyText}" />
+                                <Label Text="{Binding Quantity, StringFormat='{0}x'}" Style="{StaticResource ChipLabel}" />
+                            </VerticalStackLayout>
 
                             <Button Grid.Column="2"
                                         Text="Remove"
                                         Style="{StaticResource QuietPillButton}"
-                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:GroceryListViewModel}}, Path=RemoveItemCommand}"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:GroceryListViewModel}}, Path=RemoveCommand}"
                                         CommandParameter="{Binding .}"/>
                         </Grid>
                     </Border>
@@ -63,19 +62,14 @@
         <Border Grid.Row="2" Style="{StaticResource SurfaceCard}" Margin="20" Padding="16">
             <Border.Behaviors>
                 <toolkit:AnimationBehavior EventName="Loaded">
-                    <toolkit:AnimationBehavior.Animation>
-                        <toolkit:FadeInAnimation Duration="600" Delay="300"/>
-                    </toolkit:AnimationBehavior.Animation>
+                    <toolkit:AnimationBehavior.AnimationType>
+                        <toolkit:FadeAnimation Opacity="1" Length="600"/>
+                    </toolkit:AnimationBehavior.AnimationType>
                 </toolkit:AnimationBehavior>
             </Border.Behaviors>
-            <Grid ColumnDefinitions="*,Auto">
-                <Label Style="{StaticResource SectionTitle}" VerticalOptions="Center">
-                    <Label.Text>
-                        <StaticResource Name="AddNewProduct" />
-                    </Label.Text>
-                </Label>
-                <Button Grid.Column="1" Text="Clear List" Command="{Binding ClearListCommand}" Style="{StaticResource PrimaryButton}" />
-            </Grid>
+            <Label Text="{Binding TotalCost, StringFormat='Estimated total: ${0:0.00}'}"
+                   Style="{StaticResource SectionTitle}"
+                   VerticalOptions="Center" />
         </Border>
     </Grid>
 </ContentPage>

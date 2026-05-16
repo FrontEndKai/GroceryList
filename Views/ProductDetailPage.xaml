@@ -9,29 +9,19 @@
              BackgroundColor="{StaticResource Cream}">
     <ContentPage.Behaviors>
         <toolkit:AnimationBehavior EventName="Loaded">
-            <toolkit:AnimationBehavior.Animation>
-                <toolkit:FadeAnimation Opacity="1" Duration="500"/>
-            </toolkit:AnimationBehavior.Animation>
+            <toolkit:AnimationBehavior.AnimationType>
+                <toolkit:FadeAnimation Opacity="1" Length="500"/>
+            </toolkit:AnimationBehavior.AnimationType>
         </toolkit:AnimationBehavior>
     </ContentPage.Behaviors>
     <ScrollView>
         <VerticalStackLayout Spacing="16">
-            <Image Source="{Binding Product.ImageUrl}" Aspect="AspectFill" HeightRequest="250">
-                <Image.Behaviors>
-                    <toolkit:AnimationBehavior EventName="Loaded">
-                        <toolkit:AnimationBehavior.Animation>
-                            <toolkit:FadeInAnimation Duration="600" Delay="100"/>
-                        </toolkit:AnimationBehavior.Animation>
-                    </toolkit:AnimationBehavior>
-                </Image.Behaviors>
-            </Image>
-
-            <Border Style="{StaticResource HeroCard}" Margin="20, -50, 20, 0">
+            <Border Style="{StaticResource HeroCard}" Margin="20,0">
                 <Border.Behaviors>
                     <toolkit:AnimationBehavior EventName="Loaded">
-                        <toolkit:AnimationBehavior.Animation>
-                            <toolkit:FadeInAnimation Duration="600" Delay="200"/>
-                        </toolkit:AnimationBehavior.Animation>
+                        <toolkit:AnimationBehavior.AnimationType>
+                            <toolkit:FadeAnimation Opacity="1" Length="600"/>
+                        </toolkit:AnimationBehavior.AnimationType>
                     </toolkit:AnimationBehavior>
                 </Border.Behaviors>
                 <VerticalStackLayout Spacing="8">
@@ -43,9 +33,9 @@
             <Border Style="{StaticResource SurfaceCard}" Margin="20,0">
                 <Border.Behaviors>
                     <toolkit:AnimationBehavior EventName="Loaded">
-                        <toolkit:AnimationBehavior.Animation>
-                            <toolkit:FadeInAnimation Duration="600" Delay="300"/>
-                        </toolkit:AnimationBehavior.Animation>
+                        <toolkit:AnimationBehavior.AnimationType>
+                            <toolkit:FadeAnimation Opacity="1" Length="600"/>
+                        </toolkit:AnimationBehavior.AnimationType>
                     </toolkit:AnimationBehavior>
                 </Border.Behaviors>
                 <VerticalStackLayout Spacing="12">
@@ -57,9 +47,9 @@
             <Border Style="{StaticResource SurfaceCard}" Margin="20,0">
                 <Border.Behaviors>
                     <toolkit:AnimationBehavior EventName="Loaded">
-                        <toolkit:AnimationBehavior.Animation>
-                            <toolkit:FadeInAnimation Duration="600" Delay="400"/>
-                        </toolkit:AnimationBehavior.Animation>
+                        <toolkit:AnimationBehavior.AnimationType>
+                            <toolkit:FadeAnimation Opacity="1" Length="600"/>
+                        </toolkit:AnimationBehavior.AnimationType>
                     </toolkit:AnimationBehavior>
                 </Border.Behaviors>
                 <VerticalStackLayout Spacing="12">
@@ -68,7 +58,7 @@
                 </VerticalStackLayout>
             </Border>
 
-            <Button Text="Add to Grocery List" Command="{Binding AddToCartCommand}" Style="{StaticResource PrimaryButton}" Margin="20">
+            <Button Text="Add to Grocery List" Command="{Binding AddToListCommand}" Style="{StaticResource PrimaryButton}" Margin="20">
             </Button>
         </VerticalStackLayout>
     </ScrollView>

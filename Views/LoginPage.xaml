@@ -8,9 +8,9 @@
              BackgroundColor="{StaticResource Cream}">
     <ContentPage.Behaviors>
         <toolkit:AnimationBehavior EventName="Loaded">
-            <toolkit:AnimationBehavior.Animation>
-                <toolkit:FadeAnimation Opacity="1" Duration="500"/>
-            </toolkit:AnimationBehavior.Animation>
+            <toolkit:AnimationBehavior.AnimationType>
+                <toolkit:FadeAnimation Opacity="1" Length="500"/>
+            </toolkit:AnimationBehavior.AnimationType>
         </toolkit:AnimationBehavior>
     </ContentPage.Behaviors>
     <Grid RowDefinitions="Auto,*" Padding="24" Background="{StaticResource HeroGradient}">
@@ -27,17 +27,17 @@
         <Border Grid.Row="1" Style="{StaticResource HeroCard}" Margin="0,22,0,0">
             <Border.Behaviors>
                 <toolkit:AnimationBehavior EventName="Loaded">
-                    <toolkit:AnimationBehavior.Animation>
-                        <toolkit:FadeInAnimation Duration="600" Delay="100"/>
-                    </toolkit:AnimationBehavior.Animation>
+                    <toolkit:AnimationBehavior.AnimationType>
+                        <toolkit:FadeAnimation Opacity="1" Length="600"/>
+                    </toolkit:AnimationBehavior.AnimationType>
                 </toolkit:AnimationBehavior>
             </Border.Behaviors>
             <VerticalStackLayout VerticalOptions="Center" Spacing="12">
 
                 <Border Style="{StaticResource InputCard}">
                     <VerticalStackLayout Spacing="8" Padding="16">
-                        <Label Text="Username" Style="{StaticResource FormLabel}"/>
-                        <Entry Placeholder="Username" Text="{Binding Username}" Style="{StaticResource InputEntry}"/>
+                        <Label Text="Email" Style="{StaticResource FormLabel}"/>
+                        <Entry Placeholder="Email" Keyboard="Email" Text="{Binding Email}" Style="{StaticResource InputEntry}"/>
                     </VerticalStackLayout>
                 </Border>
 
@@ -54,21 +54,21 @@
                             Margin="0,12,0,0">
                     <Button.Behaviors>
                         <toolkit:AnimationBehavior EventName="Loaded">
-                            <toolkit:AnimationBehavior.Animation>
-                                <toolkit:FadeInAnimation Duration="600" Delay="400"/>
-                            </toolkit:AnimationBehavior.Animation>
+                            <toolkit:AnimationBehavior.AnimationType>
+                                <toolkit:FadeAnimation Opacity="1" Length="600"/>
+                            </toolkit:AnimationBehavior.AnimationType>
                         </toolkit:AnimationBehavior>
                     </Button.Behaviors>
                 </Button>
 
                 <Button Text="Don't have an account? Sign Up"
-                            Command="{Binding GoToSignUpCommand}"
+                            Command="{Binding GoToSignupCommand}"
                             Style="{StaticResource GhostButton}">
                     <Button.Behaviors>
                         <toolkit:AnimationBehavior EventName="Loaded">
-                            <toolkit:AnimationBehavior.Animation>
-                                <toolkit:FadeInAnimation Duration="600" Delay="500"/>
-                            </toolkit:AnimationBehavior.Animation>
+                            <toolkit:AnimationBehavior.AnimationType>
+                                <toolkit:FadeAnimation Opacity="1" Length="600"/>
+                            </toolkit:AnimationBehavior.AnimationType>
                         </toolkit:AnimationBehavior>
                     </Button.Behaviors>
                 </Button>

@@ -111,6 +111,7 @@ public class AddProductViewModel : BaseViewModel
 
         _catalogService.AddProduct(product);
         StatusMessage = string.Empty;
+        await UserFeedbackService.ShowSuccessAsync($"{product.Name} added to the catalog.");
         await Shell.Current.GoToAsync("..");
     }
 }

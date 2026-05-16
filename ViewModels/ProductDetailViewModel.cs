@@ -15,7 +15,7 @@ public class ProductDetailViewModel : BaseViewModel
     {
         _catalogService = catalogService;
         _groceryListService = groceryListService;
-        AddToListCommand = new Command(() => AddToList());
+        AddToListCommand = new Command(async () => await AddToListAsync());
         CompareCommand = new Command(async () => await CompareAsync());
     }
 
@@ -46,7 +46,7 @@ public class ProductDetailViewModel : BaseViewModel
         PriceOptions = new ObservableCollection<PriceOption>(_catalogService.GetPriceOptions(productId));
     }
 
-    private void AddToList()
+    private async Task AddToListAsync()
     {
         if (Product is null)
         {
@@ -54,6 +54,7 @@ public class ProductDetailViewModel : BaseViewModel
         }
 
         _groceryListService.AddProduct(Product);
+        await UserFeedbackService.ShowSuccessAsync($"{Product.Name} added to your grocery list.");
     }
 
     private async Task CompareAsync()

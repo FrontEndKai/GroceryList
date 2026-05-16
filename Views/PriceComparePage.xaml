@@ -3,24 +3,25 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="GroceryMate.Views.PriceComparePage"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:m="clr-namespace:GroceryMate.Models"
              xmlns:viewmodel="clr-namespace:GroceryMate.ViewModels"
              x:DataType="viewmodel:PriceCompareViewModel"
              Title="Price Compare"
              BackgroundColor="{StaticResource Cream}">
     <ContentPage.Behaviors>
         <toolkit:AnimationBehavior EventName="Loaded">
-            <toolkit:AnimationBehavior.Animation>
-                <toolkit:FadeAnimation Opacity="1" Duration="500"/>
-            </toolkit:AnimationBehavior.Animation>
+            <toolkit:AnimationBehavior.AnimationType>
+                <toolkit:FadeAnimation Opacity="1" Length="500"/>
+            </toolkit:AnimationBehavior.AnimationType>
         </toolkit:AnimationBehavior>
     </ContentPage.Behaviors>
     <VerticalStackLayout Spacing="16" Padding="20">
         <Border Style="{StaticResource HeroCard}">
             <Border.Behaviors>
                 <toolkit:AnimationBehavior EventName="Loaded">
-                    <toolkit:AnimationBehavior.Animation>
-                        <toolkit:FadeInAnimation Duration="600" Delay="100"/>
-                    </toolkit:AnimationBehavior.Animation>
+                    <toolkit:AnimationBehavior.AnimationType>
+                        <toolkit:FadeAnimation Opacity="1" Length="600"/>
+                    </toolkit:AnimationBehavior.AnimationType>
                 </toolkit:AnimationBehavior>
             </Border.Behaviors>
             <VerticalStackLayout Spacing="8">
@@ -32,9 +33,9 @@
         <Border Style="{StaticResource SurfaceCard}">
             <Border.Behaviors>
                 <toolkit:AnimationBehavior EventName="Loaded">
-                    <toolkit:AnimationBehavior.Animation>
-                        <toolkit:FadeInAnimation Duration="600" Delay="200"/>
-                    </toolkit:AnimationBehavior.Animation>
+                    <toolkit:AnimationBehavior.AnimationType>
+                        <toolkit:FadeAnimation Opacity="1" Length="600"/>
+                    </toolkit:AnimationBehavior.AnimationType>
                 </toolkit:AnimationBehavior>
             </Border.Behaviors>
             <VerticalStackLayout Spacing="12">
@@ -48,13 +49,13 @@
 
         <CollectionView ItemsSource="{Binding PriceOptions}" SelectionMode="None">
             <CollectionView.ItemTemplate>
-                <DataTemplate>
+                <DataTemplate x:DataType="m:PriceOption">
                     <Border Style="{StaticResource SurfaceCard}" Padding="12" Margin="0,0,0,10">
                         <Border.Behaviors>
                             <toolkit:AnimationBehavior EventName="Loaded">
-                                <toolkit:AnimationBehavior.Animation>
-                                    <toolkit:FadeInAnimation Duration="500" Delay="300"/>
-                                </toolkit:AnimationBehavior.Animation>
+                                <toolkit:AnimationBehavior.AnimationType>
+                                    <toolkit:FadeAnimation Opacity="1" Length="500"/>
+                                </toolkit:AnimationBehavior.AnimationType>
                             </toolkit:AnimationBehavior>
                         </Border.Behaviors>
                         <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">

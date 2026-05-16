@@ -19,7 +19,7 @@ public class ProductsViewModel : BaseViewModel
 
         AddProductCommand = new Command(async () => await Shell.Current.GoToAsync("add-product"));
         ViewProductCommand = new Command<Product>(async product => await ViewProductAsync(product));
-        AddToListCommand = new Command<Product>(product => AddToList(product));
+        AddToListCommand = new Command<Product>(async product => await AddToListAsync(product));
         CompareCommand = new Command<Product>(async product => await CompareAsync(product));
 
         ApplyFilter();
@@ -80,7 +80,7 @@ public class ProductsViewModel : BaseViewModel
         await Shell.Current.GoToAsync($"product-detail?id={product.Id}");
     }
 
-    private void AddToList(Product? product)
+    private async Task AddToListAsync(Product? product)
     {
         if (product is null)
         {
@@ -88,6 +88,7 @@ public class ProductsViewModel : BaseViewModel
         }
 
         _groceryListService.AddProduct(product);
+        await UserFeedbackService.ShowSuccessAsync($"{product.Name} added to your grocery list.");
     }
 
     private async Task CompareAsync(Product? product)

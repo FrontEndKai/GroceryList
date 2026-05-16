@@ -9,18 +9,18 @@
              Title="Products">
     <ContentPage.Behaviors>
         <toolkit:AnimationBehavior EventName="Loaded">
-            <toolkit:AnimationBehavior.Animation>
-                <toolkit:FadeAnimation Opacity="1" Duration="500"/>
-            </toolkit:AnimationBehavior.Animation>
+            <toolkit:AnimationBehavior.AnimationType>
+                <toolkit:FadeAnimation Opacity="1" Length="500"/>
+            </toolkit:AnimationBehavior.AnimationType>
         </toolkit:AnimationBehavior>
     </ContentPage.Behaviors>
     <Grid RowDefinitions="Auto, Auto, *">
         <Border Grid.Row="0" Style="{StaticResource HeroCard}">
             <Border.Behaviors>
                 <toolkit:AnimationBehavior EventName="Loaded">
-                    <toolkit:AnimationBehavior.Animation>
-                        <toolkit:FadeInAnimation Duration="600" Delay="100"/>
-                    </toolkit:AnimationBehavior.Animation>
+                    <toolkit:AnimationBehavior.AnimationType>
+                        <toolkit:FadeAnimation Opacity="1" Length="600"/>
+                    </toolkit:AnimationBehavior.AnimationType>
                 </toolkit:AnimationBehavior>
             </Border.Behaviors>
             <VerticalStackLayout Spacing="8">
@@ -33,9 +33,9 @@
         <Border Grid.Row="1" Style="{StaticResource SurfaceCard}" Margin="20,0">
             <Border.Behaviors>
                 <toolkit:AnimationBehavior EventName="Loaded">
-                    <toolkit:AnimationBehavior.Animation>
-                        <toolkit:FadeInAnimation Duration="600" Delay="200"/>
-                    </toolkit:AnimationBehavior.Animation>
+                    <toolkit:AnimationBehavior.AnimationType>
+                        <toolkit:FadeAnimation Opacity="1" Length="600"/>
+                    </toolkit:AnimationBehavior.AnimationType>
                 </toolkit:AnimationBehavior>
             </Border.Behaviors>
             <SearchBar Placeholder="Search for products..." Text="{Binding SearchText}" />
@@ -43,18 +43,17 @@
 
         <CollectionView Grid.Row="2" ItemsSource="{Binding Products}" SelectionMode="None" Margin="0,12,0,0">
             <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="model:Product">
+                <DataTemplate x:DataType="m:Product">
                     <Grid Padding="10">
                         <Border Style="{StaticResource ProductCard}">
                             <Border.Behaviors>
                                 <toolkit:AnimationBehavior EventName="Loaded">
-                                    <toolkit:AnimationBehavior.Animation>
-                                        <toolkit:FadeInAnimation Duration="500" Delay="300"/>
-                                    </toolkit:AnimationBehavior.Animation>
+                                    <toolkit:AnimationBehavior.AnimationType>
+                                        <toolkit:FadeAnimation Opacity="1" Length="500"/>
+                                    </toolkit:AnimationBehavior.AnimationType>
                                 </toolkit:AnimationBehavior>
                             </Border.Behaviors>
                             <StackLayout Spacing="8">
-                                <Image Source="{Binding ImageUrl}" HeightRequest="120" Aspect="AspectFill" />
                                 <VerticalStackLayout Spacing="8">
                                     <Label Text="{Binding Category}" Style="{StaticResource ChipLabel}" />
                                     <Label Text="{Binding Store}" Style="{StaticResource TagLabel}" />
@@ -65,7 +64,7 @@
                                     <Label Grid.Column="1" Text="{Binding Unit}" Style="{StaticResource CaptionLabel}" />
                                     <HorizontalStackLayout Grid.Row="1" Grid.ColumnSpan="2" Spacing="8">
                                         <Button Text="View" Style="{StaticResource QuietPillButton}"
-                                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ProductsViewModel}}, Path=GoToDetailsCommand}"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ProductsViewModel}}, Path=ViewProductCommand}"
                                                 CommandParameter="{Binding .}" />
                                         <Button Text="Add" Style="{StaticResource PrimaryPillButton}"
                                                 Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ProductsViewModel}}, Path=AddToListCommand}"
