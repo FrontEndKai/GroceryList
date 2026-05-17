@@ -2,25 +2,69 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SmartGroceryList.Views.SignupPage"
-             Title="Sign Up">
-    <VerticalStackLayout Padding="20" Spacing="15" VerticalOptions="Center">
-        <Label 
-            Text="Create Account"
-            FontSize="28"
-            FontAttributes="Bold"
-            HorizontalOptions="Center" />
+             Title="Sign Up"
+             BackgroundColor="{AppThemeBinding Light=#F7FFFE, Dark=#102226}">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="18">
+            <Border StrokeThickness="0"
+                    StrokeShape="RoundRectangle 34"
+                    Background="{StaticResource PrimaryGradient}"
+                    Padding="28"
+                    Margin="0,12,0,8">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="WELCOME"
+                           TextColor="White"
+                           FontAttributes="Bold"
+                           FontSize="12" />
+                    <Label Text="Join Smart Grocery"
+                           TextColor="White"
+                           FontAttributes="Bold"
+                           FontSize="30" />
+                    <Label Text="Create an account and manage your grocery life with a clean, modern experience."
+                           TextColor="White"
+                           Opacity="0.9"
+                           FontSize="14" />
+                </VerticalStackLayout>
+            </Border>
 
-        <Entry Placeholder="Username" />
-        <Entry Placeholder="Email" />
-        <Entry Placeholder="Password" IsPassword="True" />
-        <Entry Placeholder="Confirm Password" IsPassword="True" />
+            <Border StrokeThickness="0"
+                    StrokeShape="RoundRectangle 28"
+                    Background="White"
+                    Padding="20">
+                <VerticalStackLayout Spacing="14">
+                    <Label Text="Create your account"
+                           FontAttributes="Bold"
+                           FontSize="24"
+                           TextColor="#102226" />
 
-        <Button Text="Sign Up" HorizontalOptions="Fill" />
+                    <Entry Placeholder="Username" />
+                    <Entry Placeholder="Email address" Keyboard="Email" />
+                    <Entry Placeholder="Password" IsPassword="True" />
+                    <Entry Placeholder="Confirm password" IsPassword="True" />
 
-        <Label HorizontalOptions="Center" Text="Already have an account? Login" >
-            <Label.GestureRecognizers>
-                <TapGestureRecognizer Tapped="OnLoginTapped" />
-            </Label.GestureRecognizers>
-        </Label>
-    </VerticalStackLayout>
+                    <Button Text="Create account"
+                            BackgroundColor="#18C2C0"
+                            TextColor="White" />
+
+                    <Label Text="Password must be at least 8 characters and easy to remember."
+                           FontSize="12"
+                           TextColor="#6E6E6E" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border StrokeThickness="0"
+                    StrokeShape="RoundRectangle 22"
+                    Background="#EAFDFC"
+                    Padding="16">
+                <HorizontalStackLayout HorizontalOptions="Center" Spacing="6">
+                    <Label Text="Already have an account?" TextColor="#102226" />
+                    <Label Text="Login" TextColor="#0E7C86" FontAttributes="Bold">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnLoginTapped" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </HorizontalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

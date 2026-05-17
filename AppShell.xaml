@@ -4,7 +4,16 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:SmartGroceryList.Views"
-    Shell.FlyoutBehavior="Disabled">
+    Shell.FlyoutBehavior="Disabled"
+    BackgroundColor="{StaticResource SurfaceLight}"
+    ForegroundColor="{StaticResource Gray900}"
+    TitleColor="{StaticResource Gray900}"
+    DisabledColor="{StaticResource Gray500}"
+    UnselectedColor="{StaticResource Gray500}"
+    Shell.TabBarBackgroundColor="White"
+    Shell.TabBarForegroundColor="{StaticResource Primary}"
+    Shell.TabBarTitleColor="{StaticResource Primary}"
+    Shell.TabBarUnselectedColor="{StaticResource Gray500}">
 
     <!-- 
         Login flow will be handled separately. 
@@ -13,15 +22,15 @@
 
     <TabBar>
         <ShellContent
-            Title="Products"
+            Title="Dashboard"
             ContentTemplate="{DataTemplate views:ProductsPage}"
             Route="ProductsPage" />
         <ShellContent
-            Title="Grocery Lists"
+            Title="Catalog"
             ContentTemplate="{DataTemplate views:ProductsPage}" 
             Route="GroceryListsPage" />
         <ShellContent
-            Title="Dashboard"
+            Title="Lists"
             ContentTemplate="{DataTemplate views:ProductsPage}" 
             Route="DashboardPage" />
     </TabBar>

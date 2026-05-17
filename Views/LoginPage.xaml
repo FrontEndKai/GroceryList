@@ -4,45 +4,70 @@
              xmlns:viewModels="clr-namespace:SmartGroceryList.ViewModels"
              x:Class="SmartGroceryList.Views.LoginPage"
              Title="{Binding Title}"
-             Shell.NavBarIsVisible="False">
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="{AppThemeBinding Light=#F7FFFE, Dark=#102226}">
     <ContentPage.BindingContext>
         <viewModels:LoginViewModel />
     </ContentPage.BindingContext>
-    <Grid RowDefinitions="Auto, *, Auto" Padding="20">
-        <Label 
-            Grid.Row="0"
-            Text="Welcome to Smart Grocery" 
-            FontSize="32" 
-            FontAttributes="Bold"
-            HorizontalOptions="Center" 
-            VerticalOptions="Center"
-            Margin="0,50,0,0"/>
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="18">
+            <Border StrokeThickness="0"
+                    StrokeShape="RoundRectangle 34"
+                    Background="{StaticResource PrimaryGradient}"
+                    Padding="28"
+                    Margin="0,12,0,8">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="SMART GROCERY"
+                           TextColor="White"
+                           FontAttributes="Bold"
+                           FontSize="12" />
+                    <Label Text="Fresh groceries, beautifully managed"
+                           TextColor="White"
+                           FontAttributes="Bold"
+                           FontSize="30" />
+                    <Label Text="A clean, modern entry screen that matches the new turquoise and white product dashboard."
+                           TextColor="White"
+                           Opacity="0.9"
+                           FontSize="14" />
+                </VerticalStackLayout>
+            </Border>
 
-        <VerticalStackLayout 
-            Grid.Row="1"
-            Spacing="15" 
-            VerticalOptions="Center">
+            <Border StrokeThickness="0"
+                    StrokeShape="RoundRectangle 28"
+                    Background="White"
+                    Padding="20">
+                <VerticalStackLayout Spacing="14">
+                    <Label Text="Sign in"
+                           FontAttributes="Bold"
+                           FontSize="24"
+                           TextColor="#102226" />
 
-            <Entry Placeholder="Username" Text="{Binding Username}" />
-            <Entry Placeholder="Password" IsPassword="True" Text="{Binding Password}" />
+                    <Entry Placeholder="Username" Text="{Binding Username}" />
+                    <Entry Placeholder="Password" IsPassword="True" Text="{Binding Password}" />
 
-            <Button 
-                Text="Login" 
-                Command="{Binding LoginCommand}" 
-                IsEnabled="{Binding IsNotBusy}"
-                HorizontalOptions="Fill" />
-            
-            <ActivityIndicator IsRunning="{Binding IsBusy}" HorizontalOptions="Center" />
+                    <Button Text="Login"
+                            Command="{Binding LoginCommand}"
+                            IsEnabled="{Binding IsNotBusy}"
+                            BackgroundColor="#18C2C0"
+                            TextColor="White" />
 
+                    <ActivityIndicator IsRunning="{Binding IsBusy}" HorizontalOptions="Center" Color="#18C2C0" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border StrokeThickness="0"
+                    StrokeShape="RoundRectangle 22"
+                    Background="#EAFDFC"
+                    Padding="16">
+                <HorizontalStackLayout HorizontalOptions="Center" Spacing="6">
+                    <Label Text="Don't have an account?" TextColor="#102226" />
+                    <Label Text="Sign Up" TextColor="#0E7C86" FontAttributes="Bold">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding GoToSignupCommand}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </HorizontalStackLayout>
+            </Border>
         </VerticalStackLayout>
-
-        <HorizontalStackLayout Grid.Row="2" HorizontalOptions="Center" Spacing="5">
-            <Label Text="Don't have an account?" />
-            <Label Text="Sign Up" TextColor="{StaticResource Primary}">
-                <Label.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding GoToSignupCommand}" />
-                </Label.GestureRecognizers>
-            </Label>
-        </HorizontalStackLayout>
-    </Grid>
+    </ScrollView>
 </ContentPage>

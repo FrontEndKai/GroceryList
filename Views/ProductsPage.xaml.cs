@@ -15,7 +15,7 @@ public partial class ProductsPage : ContentPage
         base.OnAppearing();
         if (BindingContext is ProductsViewModel vm)
         {
-            await vm.GetProductsCommand.ExecuteAsync(null);
+            await vm.ReloadProductsAsync();
         }
     }
 }

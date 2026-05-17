@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using SmartGroceryList.Interfaces;
 using SmartGroceryList.Models;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace SmartGroceryList.ViewModels
@@ -10,10 +11,14 @@ namespace SmartGroceryList.ViewModels
     public partial class ProductsViewModel : BaseViewModel
     {
         private readonly IProductService _productService;
+        private readonly List<Product> _allProducts = new();
         public ObservableCollection<Product> Products { get; } = new();
 
         [ObservableProperty]
         private int productCount;
+
+        [ObservableProperty]
+        private string? searchText;
 
         public ProductsViewModel(IProductService productService)
         {
@@ -24,6 +29,16 @@ namespace SmartGroceryList.ViewModels
         [RelayCommand]
         async Task GetProductsAsync()
         {
+            await LoadProductsAsync(resetSearch: false);
+        }
+
+        public Task ReloadProductsAsync()
+        {
+            return LoadProductsAsync(resetSearch: true);
+        }
+
+        private async Task LoadProductsAsync(bool resetSearch)
+        {
             if (IsBusy)
                 return;
 
@@ -33,13 +48,24 @@ namespace SmartGroceryList.ViewModels
                 await _productService.SeedProductsAsync(); // Seed sample data
                 var products = await _productService.GetProductsAsync();
 
-                if (Products.Count != 0)
-                    Products.Clear();
+                _allProducts.Clear();
+                _allProducts.AddRange(products);
 
-                foreach (var product in products)
-                    Products.Add(product);
-
-                ProductCount = Products.Count;
+                if (resetSearch)
+                {
+                    if (!string.IsNullOrWhiteSpace(SearchText))
+                    {
+                        SearchText = string.Empty;
+                    }
+                    else
+                    {
+                        ApplySearchFilter();
+                    }
+                }
+                else
+                {
+                    ApplySearchFilter();
+                }
             }
             catch (System.Exception ex)
             {
@@ -49,6 +75,30 @@ namespace SmartGroceryList.ViewModels
             {
                 IsBusy = false;
             }
+        }
+
+        partial void OnSearchTextChanged(string? value)
+        {
+            ApplySearchFilter();
+        }
+
+        private void ApplySearchFilter()
+        {
+            var filtered = string.IsNullOrWhiteSpace(SearchText)
+                ? _allProducts
+                : _allProducts.Where(product =>
+                    (product.Name?.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ?? false) ||
+                    (product.Brand?.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ?? false) ||
+                    (product.Description?.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ?? false))
+                    .ToList();
+
+            Products.Clear();
+            foreach (var product in filtered)
+            {
+                Products.Add(product);
+            }
+
+            ProductCount = Products.Count;
         }
     }
 }
