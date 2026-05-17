@@ -1,26 +1,16 @@
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
+using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace GroceryMate.ViewModels;
-
-public abstract class BaseViewModel : INotifyPropertyChanged
+namespace SmartGroceryList.ViewModels
 {
-    public event PropertyChangedEventHandler? PropertyChanged;
-
-    protected bool SetProperty<T>(ref T backingStore, T value, [CallerMemberName] string? propertyName = null)
+    public partial class BaseViewModel : ObservableObject
     {
-        if (EqualityComparer<T>.Default.Equals(backingStore, value))
-        {
-            return false;
-        }
+        [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(IsNotBusy))]
+        bool isBusy;
 
-        backingStore = value;
-        OnPropertyChanged(propertyName);
-        return true;
-    }
+        [ObservableProperty]
+        string title;
 
-    protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        public bool IsNotBusy => !IsBusy;
     }
 }

@@ -1,7 +1,7 @@
 ﻿using ObjCRuntime;
 using UIKit;
 
-namespace GroceryMate;
+namespace SmartGroceryList;
 
 public class Program
 {

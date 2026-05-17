@@ -1,7 +1,7 @@
 ﻿using Android.App;
 using Android.Runtime;
 
-namespace GroceryMate;
+namespace SmartGroceryList;
 
 [Application]
 public class MainApplication : MauiApplication

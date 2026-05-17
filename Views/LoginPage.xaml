@@ -1,80 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:vm="clr-namespace:GroceryMate.ViewModels"
-             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             x:Class="GroceryMate.Views.LoginPage"
-             x:DataType="vm:LoginViewModel"
-             Shell.NavBarIsVisible="False"
-             BackgroundColor="{StaticResource Cream}">
-    <ContentPage.Behaviors>
-        <toolkit:AnimationBehavior EventName="Loaded">
-            <toolkit:AnimationBehavior.Animation>
-                <toolkit:FadeAnimation Opacity="1" Duration="500"/>
-            </toolkit:AnimationBehavior.Animation>
-        </toolkit:AnimationBehavior>
-    </ContentPage.Behaviors>
-    <Grid RowDefinitions="Auto,*" Padding="24" Background="{StaticResource HeroGradient}">
-        <VerticalStackLayout Spacing="12">
-            <Label Text="GroceryMate" Style="{StaticResource DisplayTitle}" />
-            <Label Text="Your curated cart for every aisle." Style="{StaticResource HeroSubTitle}" />
-            <HorizontalStackLayout Spacing="8">
-                <Label Text="Signature" Style="{StaticResource TagLabel}" />
-                <Label Text="Curated" Style="{StaticResource ChipLabel}" />
-                <Label Text="Seasonal" Style="{StaticResource TagLabel}" />
-            </HorizontalStackLayout>
+             xmlns:viewModels="clr-namespace:SmartGroceryList.ViewModels"
+             x:Class="SmartGroceryList.Views.LoginPage"
+             Title="{Binding Title}"
+             Shell.NavBarIsVisible="False">
+    <ContentPage.BindingContext>
+        <viewModels:LoginViewModel />
+    </ContentPage.BindingContext>
+    <Grid RowDefinitions="Auto, *, Auto" Padding="20">
+        <Label 
+            Grid.Row="0"
+            Text="Welcome to Smart Grocery" 
+            FontSize="32" 
+            FontAttributes="Bold"
+            HorizontalOptions="Center" 
+            VerticalOptions="Center"
+            Margin="0,50,0,0"/>
+
+        <VerticalStackLayout 
+            Grid.Row="1"
+            Spacing="15" 
+            VerticalOptions="Center">
+
+            <Entry Placeholder="Username" Text="{Binding Username}" />
+            <Entry Placeholder="Password" IsPassword="True" Text="{Binding Password}" />
+
+            <Button 
+                Text="Login" 
+                Command="{Binding LoginCommand}" 
+                IsEnabled="{Binding IsNotBusy}"
+                HorizontalOptions="Fill" />
+            
+            <ActivityIndicator IsRunning="{Binding IsBusy}" HorizontalOptions="Center" />
+
         </VerticalStackLayout>
 
-        <Border Grid.Row="1" Style="{StaticResource HeroCard}" Margin="0,22,0,0">
-            <Border.Behaviors>
-                <toolkit:AnimationBehavior EventName="Loaded">
-                    <toolkit:AnimationBehavior.Animation>
-                        <toolkit:FadeInAnimation Duration="600" Delay="100"/>
-                    </toolkit:AnimationBehavior.Animation>
-                </toolkit:AnimationBehavior>
-            </Border.Behaviors>
-            <VerticalStackLayout VerticalOptions="Center" Spacing="12">
-
-                <Border Style="{StaticResource InputCard}">
-                    <VerticalStackLayout Spacing="8" Padding="16">
-                        <Label Text="Username" Style="{StaticResource FormLabel}"/>
-                        <Entry Placeholder="Username" Text="{Binding Username}" Style="{StaticResource InputEntry}"/>
-                    </VerticalStackLayout>
-                </Border>
-
-                <Border Style="{StaticResource InputCard}">
-                    <VerticalStackLayout Spacing="8" Padding="16">
-                        <Label Text="Password" Style="{StaticResource FormLabel}"/>
-                        <Entry Placeholder="Password" IsPassword="True" Text="{Binding Password}" Style="{StaticResource InputEntry}"/>
-                    </VerticalStackLayout>
-                </Border>
-
-                <Button Text="Login"
-                            Command="{Binding LoginCommand}"
-                            Style="{StaticResource PrimaryButton}"
-                            Margin="0,12,0,0">
-                    <Button.Behaviors>
-                        <toolkit:AnimationBehavior EventName="Loaded">
-                            <toolkit:AnimationBehavior.Animation>
-                                <toolkit:FadeInAnimation Duration="600" Delay="400"/>
-                            </toolkit:AnimationBehavior.Animation>
-                        </toolkit:AnimationBehavior>
-                    </Button.Behaviors>
-                </Button>
-
-                <Button Text="Don't have an account? Sign Up"
-                            Command="{Binding GoToSignUpCommand}"
-                            Style="{StaticResource GhostButton}">
-                    <Button.Behaviors>
-                        <toolkit:AnimationBehavior EventName="Loaded">
-                            <toolkit:AnimationBehavior.Animation>
-                                <toolkit:FadeInAnimation Duration="600" Delay="500"/>
-                            </toolkit:AnimationBehavior.Animation>
-                        </toolkit:AnimationBehavior>
-                    </Button.Behaviors>
-                </Button>
-
-                <Label Text="Tip: demo@grocerymate.com / password123" Style="{StaticResource CaptionLabel}" HorizontalTextAlignment="Center"/>
-            </VerticalStackLayout>
-        </Border>
+        <HorizontalStackLayout Grid.Row="2" HorizontalOptions="Center" Spacing="5">
+            <Label Text="Don't have an account?" />
+            <Label Text="Sign Up" TextColor="{StaticResource Primary}">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding GoToSignupCommand}" />
+                </Label.GestureRecognizers>
+            </Label>
+        </HorizontalStackLayout>
     </Grid>
 </ContentPage>

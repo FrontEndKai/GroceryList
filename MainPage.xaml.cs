@@ -1,4 +1,4 @@
-﻿namespace GroceryMate;
+﻿namespace SmartGroceryList;
 
 public partial class MainPage : ContentPage
 {

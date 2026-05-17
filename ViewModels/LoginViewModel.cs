@@ -1,59 +1,54 @@
-using GroceryMate.Services;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using SmartGroceryList.Views;
+using System.Threading.Tasks;
 
-namespace GroceryMate.ViewModels;
-
-public class LoginViewModel : BaseViewModel
+namespace SmartGroceryList.ViewModels
 {
-    private readonly AuthService _authService;
-    private string _email = string.Empty;
-    private string _password = string.Empty;
-    private string _errorMessage = string.Empty;
-
-    public LoginViewModel(AuthService authService)
+    public partial class LoginViewModel : BaseViewModel
     {
-        _authService = authService;
-        LoginCommand = new Command(async () => await LoginAsync());
-        GoToSignupCommand = new Command(async () => await Shell.Current.GoToAsync("signup"));
-    }
+        [ObservableProperty]
+        string username;
 
-    public string Email
-    {
-        get => _email;
-        set => SetProperty(ref _email, value);
-    }
+        [ObservableProperty]
+        string password;
 
-    public string Password
-    {
-        get => _password;
-        set => SetProperty(ref _password, value);
-    }
-
-    public string ErrorMessage
-    {
-        get => _errorMessage;
-        set
+        public LoginViewModel()
         {
-            if (SetProperty(ref _errorMessage, value))
+            Title = "Login";
+        }
+
+        [RelayCommand]
+        async Task Login()
+        {
+            if (IsBusy)
+                return;
+
+            IsBusy = true;
+
+            try
             {
-                OnPropertyChanged(nameof(HasError));
+                // TODO: Add authentication logic here
+                // For now, we'll just simulate a delay and navigate to the main app page
+                await Task.Delay(2000);
+
+                // Navigate to the main application page after successful login
+                await Shell.Current.GoToAsync($"//{nameof(ProductsPage)}");
+            }
+            catch (System.Exception ex)
+            {
+                await Shell.Current.DisplayAlert("Error", $"Login failed: {ex.Message}", "OK");
+            }
+            finally
+            {
+                IsBusy = false;
             }
         }
-    }
 
-    public bool HasError => !string.IsNullOrWhiteSpace(ErrorMessage);
-
-    public Command LoginCommand { get; }
-    public Command GoToSignupCommand { get; }
-
-    private async Task LoginAsync()
-    {
-        if (_authService.Login(Email, Password, out var message))
+        [RelayCommand]
+        async Task GoToSignup()
         {
-            ErrorMessage = string.Empty;
-            await Shell.Current.GoToAsync("//main");
-            return;
+            await Shell.Current.GoToAsync(nameof(SignupPage));
         }
-
-        ErrorMessage = message;
     }
 }

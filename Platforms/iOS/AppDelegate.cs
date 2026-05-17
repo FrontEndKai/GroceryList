@@ -1,6 +1,6 @@
 ﻿using Foundation;
 
-namespace GroceryMate;
+namespace SmartGroceryList;
 
 [Register("AppDelegate")]
 public class AppDelegate : MauiUIApplicationDelegate

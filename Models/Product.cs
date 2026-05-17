@@ -1,13 +1,19 @@
-namespace GroceryMate.Models;
+using SQLite;
+using System;
 
-public class Product
+namespace SmartGroceryList.Models
 {
-    public string Id { get; set; } = Guid.NewGuid().ToString();
-    public string Name { get; set; } = string.Empty;
-    public string Category { get; set; } = string.Empty;
-    public decimal Price { get; set; }
-    public string Store { get; set; } = string.Empty;
-    public string Unit { get; set; } = string.Empty;
-    public string Description { get; set; } = string.Empty;
-    public string Aisle { get; set; } = string.Empty;
+    public class Product
+    {
+        [PrimaryKey, AutoIncrement]
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Brand { get; set; }
+        public int CategoryId { get; set; }
+        public string ImageUrl { get; set; }
+        public string Description { get; set; }
+        public double Quantity { get; set; }
+        public string UnitOfMeasure { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    }
 }

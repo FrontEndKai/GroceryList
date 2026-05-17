@@ -1,21 +1,34 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using SmartGroceryList.Interfaces;
 
-namespace GroceryMate;
+namespace SmartGroceryList;
 
 public partial class App : Application
 {
-	private readonly AppShell _appShell;
+	private readonly IDatabaseService _databaseService;
 
-	public App(AppShell appShell)
+	public App(IDatabaseService databaseService)
 	{
-		_appShell = appShell;
 		InitializeComponent();
-	}
 
-	public static IServiceProvider Services { get; set; } = null!;
+		_databaseService = databaseService;
+
+		// Initialize the database in background so UI can appear immediately
+		Task.Run(async () =>
+		{
+			try
+			{
+				await _databaseService.Init();
+			}
+			catch (Exception ex)
+			{
+				System.Diagnostics.Debug.WriteLine($"Database init error: {ex}");
+			}
+		});
+	}
 
 	protected override Window CreateWindow(IActivationState? activationState)
 	{
-		return new Window(_appShell);
+		return new Window(new AppShell());
 	}
 }

@@ -1,13 +1,14 @@
-using GroceryMate.ViewModels;
-using Microsoft.Extensions.DependencyInjection;
-
-namespace GroceryMate.Views;
+namespace SmartGroceryList.Views;
 
 public partial class SignupPage : ContentPage
 {
-    public SignupPage()
+	public SignupPage()
+	{
+		InitializeComponent();
+	}
+
+    private async void OnLoginTapped(object sender, System.EventArgs e)
     {
-        InitializeComponent();
-        BindingContext = App.Services.GetRequiredService<SignupViewModel>();
+        await Shell.Current.GoToAsync("..");
     }
 }

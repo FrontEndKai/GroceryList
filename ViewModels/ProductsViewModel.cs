@@ -1,102 +1,54 @@
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using SmartGroceryList.Interfaces;
+using SmartGroceryList.Models;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using GroceryMate.Models;
-using GroceryMate.Services;
+using System.Threading.Tasks;
 
-namespace GroceryMate.ViewModels;
-
-public class ProductsViewModel : BaseViewModel
+namespace SmartGroceryList.ViewModels
 {
-    private readonly ProductCatalogService _catalogService;
-    private readonly GroceryListService _groceryListService;
-    private string _searchText = string.Empty;
-
-    public ProductsViewModel(ProductCatalogService catalogService, GroceryListService groceryListService)
+    public partial class ProductsViewModel : BaseViewModel
     {
-        _catalogService = catalogService;
-        _groceryListService = groceryListService;
-        Products = new ObservableCollection<Product>();
+        private readonly IProductService _productService;
+        public ObservableCollection<Product> Products { get; } = new();
 
-        AddProductCommand = new Command(async () => await Shell.Current.GoToAsync("add-product"));
-        ViewProductCommand = new Command<Product>(async product => await ViewProductAsync(product));
-        AddToListCommand = new Command<Product>(product => AddToList(product));
-        CompareCommand = new Command<Product>(async product => await CompareAsync(product));
+        [ObservableProperty]
+        private int productCount;
 
-        ApplyFilter();
-        _catalogService.Products.CollectionChanged += OnCatalogChanged;
-    }
-
-    public ObservableCollection<Product> Products { get; }
-
-    public string SearchText
-    {
-        get => _searchText;
-        set
+        public ProductsViewModel(IProductService productService)
         {
-            if (SetProperty(ref _searchText, value))
+            Title = "Dashboard";
+            _productService = productService;
+        }
+
+        [RelayCommand]
+        async Task GetProductsAsync()
+        {
+            if (IsBusy)
+                return;
+
+            try
             {
-                ApplyFilter();
+                IsBusy = true;
+                await _productService.SeedProductsAsync(); // Seed sample data
+                var products = await _productService.GetProductsAsync();
+
+                if (Products.Count != 0)
+                    Products.Clear();
+
+                foreach (var product in products)
+                    Products.Add(product);
+
+                ProductCount = Products.Count;
+            }
+            catch (System.Exception ex)
+            {
+                await Shell.Current.DisplayAlert("Error", $"Could not get products: {ex.Message}", "OK");
+            }
+            finally
+            {
+                IsBusy = false;
             }
         }
-    }
-
-    public Command AddProductCommand { get; }
-    public Command<Product> ViewProductCommand { get; }
-    public Command<Product> AddToListCommand { get; }
-    public Command<Product> CompareCommand { get; }
-
-    private void OnCatalogChanged(object? sender, NotifyCollectionChangedEventArgs e)
-    {
-        ApplyFilter();
-    }
-
-    private void ApplyFilter()
-    {
-        var filter = SearchText?.Trim();
-        Products.Clear();
-
-        IEnumerable<Product> result = _catalogService.Products;
-        if (!string.IsNullOrWhiteSpace(filter))
-        {
-            result = result.Where(product =>
-                product.Name.Contains(filter, StringComparison.OrdinalIgnoreCase) ||
-                product.Category.Contains(filter, StringComparison.OrdinalIgnoreCase) ||
-                product.Store.Contains(filter, StringComparison.OrdinalIgnoreCase));
-        }
-
-        foreach (var product in result)
-        {
-            Products.Add(product);
-        }
-    }
-
-    private async Task ViewProductAsync(Product? product)
-    {
-        if (product is null)
-        {
-            return;
-        }
-
-        await Shell.Current.GoToAsync($"product-detail?id={product.Id}");
-    }
-
-    private void AddToList(Product? product)
-    {
-        if (product is null)
-        {
-            return;
-        }
-
-        _groceryListService.AddProduct(product);
-    }
-
-    private async Task CompareAsync(Product? product)
-    {
-        if (product is null)
-        {
-            return;
-        }
-
-        await Shell.Current.GoToAsync($"price-compare?id={product.Id}");
     }
 }

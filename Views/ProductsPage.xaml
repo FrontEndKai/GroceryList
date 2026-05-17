@@ -1,82 +1,159 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:m="clr-namespace:GroceryMate.Models"
-             xmlns:vm="clr-namespace:GroceryMate.ViewModels"
-             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             x:Class="GroceryMate.Views.ProductsPage"
-             x:DataType="vm:ProductsViewModel"
-             Title="Products">
-    <ContentPage.Behaviors>
-        <toolkit:AnimationBehavior EventName="Loaded">
-            <toolkit:AnimationBehavior.Animation>
-                <toolkit:FadeAnimation Opacity="1" Duration="500"/>
-            </toolkit:AnimationBehavior.Animation>
-        </toolkit:AnimationBehavior>
-    </ContentPage.Behaviors>
-    <Grid RowDefinitions="Auto, Auto, *">
-        <Border Grid.Row="0" Style="{StaticResource HeroCard}">
-            <Border.Behaviors>
-                <toolkit:AnimationBehavior EventName="Loaded">
-                    <toolkit:AnimationBehavior.Animation>
-                        <toolkit:FadeInAnimation Duration="600" Delay="100"/>
-                    </toolkit:AnimationBehavior.Animation>
-                </toolkit:AnimationBehavior>
-            </Border.Behaviors>
-            <VerticalStackLayout Spacing="8">
-                <Label Text="Fresh picks" Style="{StaticResource DisplayTitle}" />
-                <Button Grid.Column="1" Text="Add product" Command="{Binding AddProductCommand}" Style="{StaticResource PrimaryButton}" />
-                <Label Grid.Row="1" Text="Curated essentials and seasonal highlights." Style="{StaticResource HeroSubTitle}" />
-            </VerticalStackLayout>
-        </Border>
+             xmlns:models="clr-namespace:SmartGroceryList.Models"
+             x:Class="SmartGroceryList.Views.ProductsPage"
+             Title="{Binding Title}"
+             BackgroundColor="{AppThemeBinding Light=#F4FAF7, Dark=#121212}">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="16">
 
-        <Border Grid.Row="1" Style="{StaticResource SurfaceCard}" Margin="20,0">
-            <Border.Behaviors>
-                <toolkit:AnimationBehavior EventName="Loaded">
-                    <toolkit:AnimationBehavior.Animation>
-                        <toolkit:FadeInAnimation Duration="600" Delay="200"/>
-                    </toolkit:AnimationBehavior.Animation>
-                </toolkit:AnimationBehavior>
-            </Border.Behaviors>
-            <SearchBar Placeholder="Search for products..." Text="{Binding SearchText}" />
-        </Border>
+            <Border StrokeThickness="0"
+                    StrokeShape="RoundRectangle 28"
+                    Background="{StaticResource PrimaryGradient}"
+                    Padding="24">
+                <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,Auto" ColumnSpacing="16">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="SMART GROCERY"
+                               TextColor="White"
+                               FontSize="12"
+                               FontAttributes="Bold" />
+                        <Label Text="Your grocery command center"
+                               TextColor="White"
+                               FontSize="28"
+                               FontAttributes="Bold" />
+                        <Label Text="Everything is now easier to see: products, counts, and quick access in one premium dashboard."
+                               TextColor="White"
+                               Opacity="0.9"
+                               FontSize="14" />
+                    </VerticalStackLayout>
 
-        <CollectionView Grid.Row="2" ItemsSource="{Binding Products}" SelectionMode="None" Margin="0,12,0,0">
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="model:Product">
-                    <Grid Padding="10">
-                        <Border Style="{StaticResource ProductCard}">
-                            <Border.Behaviors>
-                                <toolkit:AnimationBehavior EventName="Loaded">
-                                    <toolkit:AnimationBehavior.Animation>
-                                        <toolkit:FadeInAnimation Duration="500" Delay="300"/>
-                                    </toolkit:AnimationBehavior.Animation>
-                                </toolkit:AnimationBehavior>
-                            </Border.Behaviors>
-                            <StackLayout Spacing="8">
-                                <Image Source="{Binding ImageUrl}" HeightRequest="120" Aspect="AspectFill" />
-                                <VerticalStackLayout Spacing="8">
-                                    <Label Text="{Binding Category}" Style="{StaticResource ChipLabel}" />
-                                    <Label Text="{Binding Store}" Style="{StaticResource TagLabel}" />
+                    <Border Grid.Column="1"
+                            StrokeThickness="0"
+                            StrokeShape="RoundRectangle 24"
+                            Background="#25FFFFFF"
+                            Padding="18"
+                            HorizontalOptions="End"
+                            VerticalOptions="Start">
+                        <VerticalStackLayout Spacing="2" HorizontalOptions="Center">
+                            <Label Text="{Binding ProductCount}"
+                                   TextColor="White"
+                                   FontSize="30"
+                                   FontAttributes="Bold"
+                                   HorizontalTextAlignment="Center" />
+                            <Label Text="items"
+                                   TextColor="White"
+                                   FontSize="12"
+                                   HorizontalTextAlignment="Center" />
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                <Border StrokeThickness="0" StrokeShape="RoundRectangle 22" Background="White" Padding="16">
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="{Binding ProductCount}" FontSize="24" FontAttributes="Bold" TextColor="#0DB67A" />
+                        <Label Text="Products loaded" FontSize="13" TextColor="#6E6E6E" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Grid.Column="1" StrokeThickness="0" StrokeShape="RoundRectangle 22" Background="White" Padding="16">
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Live" FontSize="24" FontAttributes="Bold" TextColor="#0DB67A" />
+                        <Label Text="Ready for browsing" FontSize="13" TextColor="#6E6E6E" />
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+
+            <SearchBar Placeholder="Search products, brands, or categories"
+                       BackgroundColor="White"
+                       TextColor="Black"
+                       PlaceholderColor="#6E6E6E" />
+
+            <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center">
+                <Label Text="Featured products"
+                       FontSize="20"
+                       FontAttributes="Bold"
+                       TextColor="{AppThemeBinding Light=#212121, Dark=White}" />
+
+                <Button Grid.Column="1"
+                        Text="Refresh"
+                        Command="{Binding GetProductsCommand}"
+                        BackgroundColor="#0DB67A"
+                        TextColor="White"
+                        CornerRadius="18"
+                        Padding="18,10" />
+            </Grid>
+
+            <CollectionView ItemsSource="{Binding Products}"
+                            SelectionMode="None"
+                            Margin="0,4,0,0">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Product">
+                        <Border StrokeThickness="0"
+                                StrokeShape="RoundRectangle 24"
+                                Background="White"
+                                Padding="16"
+                                Margin="0,0,0,12">
+                            <Grid ColumnDefinitions="72,*,Auto" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="14">
+                                <Border WidthRequest="72"
+                                        HeightRequest="72"
+                                        StrokeThickness="0"
+                                        StrokeShape="RoundRectangle 18"
+                                        Background="#E7F8EF">
+                                    <Label Text="🍃"
+                                           FontSize="30"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center" />
+                                </Border>
+
+                                <VerticalStackLayout Grid.Column="1" Spacing="4" VerticalOptions="Center">
+                                    <Label Text="{Binding Name}"
+                                           FontSize="18"
+                                           FontAttributes="Bold"
+                                           TextColor="#212121" />
+                                    <Label Text="{Binding Brand}"
+                                           FontSize="13"
+                                           TextColor="#6E6E6E" />
+                                    <Label Text="{Binding Quantity, StringFormat='Qty: {0}'}"
+                                           FontSize="13"
+                                           TextColor="#0DB67A" />
                                 </VerticalStackLayout>
-                                <Label Grid.Row="1" Text="{Binding Name}" FontFamily="OpenSansSemibold" FontSize="16" TextColor="{StaticResource Soil}" />
-                                <Grid Grid.Row="2" ColumnDefinitions="*,Auto" RowSpacing="6">
-                                    <Label Text="{Binding Price, StringFormat='${0:0.00}'}" Style="{StaticResource PriceLabel}" />
-                                    <Label Grid.Column="1" Text="{Binding Unit}" Style="{StaticResource CaptionLabel}" />
-                                    <HorizontalStackLayout Grid.Row="1" Grid.ColumnSpan="2" Spacing="8">
-                                        <Button Text="View" Style="{StaticResource QuietPillButton}"
-                                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ProductsViewModel}}, Path=GoToDetailsCommand}"
-                                                CommandParameter="{Binding .}" />
-                                        <Button Text="Add" Style="{StaticResource PrimaryPillButton}"
-                                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ProductsViewModel}}, Path=AddToListCommand}"
-                                                CommandParameter="{Binding .}" />
-                                    </HorizontalStackLayout>
-                                </Grid>
-                            </StackLayout>
+
+                                <Label Grid.Column="2"
+                                       Text=">"
+                                       FontSize="24"
+                                       TextColor="#0DB67A"
+                                       VerticalOptions="Center"
+                                       HorizontalOptions="End" />
+                            </Grid>
                         </Border>
-                    </Grid>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-    </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <ActivityIndicator IsVisible="{Binding IsBusy}"
+                               IsRunning="{Binding IsBusy}"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center" />
+
+            <Border StrokeThickness="0"
+                    StrokeShape="RoundRectangle 28"
+                    Background="#0DB67A"
+                    Padding="18"
+                    Margin="0,4,0,24">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Ready to test?"
+                           TextColor="White"
+                           FontAttributes="Bold"
+                           FontSize="18" />
+                    <Label Text="This view is now intentionally loud and clear so the new design is easy to spot immediately."
+                           TextColor="White"
+                           Opacity="0.9"
+                           FontSize="13" />
+                </VerticalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

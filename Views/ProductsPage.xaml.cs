@@ -1,13 +1,21 @@
-using GroceryMate.ViewModels;
-using Microsoft.Extensions.DependencyInjection;
+using SmartGroceryList.ViewModels;
 
-namespace GroceryMate.Views;
+namespace SmartGroceryList.Views;
 
 public partial class ProductsPage : ContentPage
 {
-    public ProductsPage()
+	public ProductsPage(ProductsViewModel viewModel)
+	{
+		InitializeComponent();
+		BindingContext = viewModel;
+	}
+
+    protected override async void OnAppearing()
     {
-        InitializeComponent();
-        BindingContext = App.Services.GetRequiredService<ProductsViewModel>();
+        base.OnAppearing();
+        if (BindingContext is ProductsViewModel vm)
+        {
+            await vm.GetProductsCommand.ExecuteAsync(null);
+        }
     }
 }

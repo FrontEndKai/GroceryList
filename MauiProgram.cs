@@ -1,8 +1,11 @@
-﻿using CommunityToolkit.Maui;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
+using Microcharts.Maui;
+using SmartGroceryList.Interfaces;
+using SmartGroceryList.Services;
+using SmartGroceryList.ViewModels;
+using SmartGroceryList.Views;
 
-namespace GroceryMate;
+namespace SmartGroceryList;
 
 public static class MauiProgram
 {
@@ -11,40 +14,27 @@ public static class MauiProgram
 		var builder = MauiApp.CreateBuilder();
 		builder
 			.UseMauiApp<App>()
-			.UseMauiCommunityToolkit()
+			.UseMicrocharts()
 			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 			});
 
-		builder.Services.AddSingleton<AppShell>();
-		builder.Services.AddSingleton<Services.AuthService>();
-		builder.Services.AddSingleton<Services.ProductCatalogService>();
-		builder.Services.AddSingleton<Services.GroceryListService>();
-
-		builder.Services.AddTransient<ViewModels.LoginViewModel>();
-		builder.Services.AddTransient<ViewModels.SignupViewModel>();
-		builder.Services.AddTransient<ViewModels.ProductsViewModel>();
-		builder.Services.AddTransient<ViewModels.ProductDetailViewModel>();
-		builder.Services.AddTransient<ViewModels.AddProductViewModel>();
-		builder.Services.AddTransient<ViewModels.GroceryListViewModel>();
-		builder.Services.AddTransient<ViewModels.PriceCompareViewModel>();
-
-		builder.Services.AddTransient<Views.LoginPage>();
-		builder.Services.AddTransient<Views.SignupPage>();
-		builder.Services.AddTransient<Views.ProductsPage>();
-		builder.Services.AddTransient<Views.ProductDetailPage>();
-		builder.Services.AddTransient<Views.AddProductPage>();
-		builder.Services.AddTransient<Views.GroceryListPage>();
-		builder.Services.AddTransient<Views.PriceComparePage>();
-
 #if DEBUG
 		builder.Logging.AddDebug();
 #endif
 
-		var app = builder.Build();
-		App.Services = app.Services;
-		return app;
+		builder.Services.AddSingleton<IDatabaseService, DatabaseService>();
+		builder.Services.AddSingleton<IProductService, ProductService>();
+		builder.Services.AddSingleton<SmartGroceryList.Services.IThemeService, SmartGroceryList.Services.ThemeService>();
+
+		builder.Services.AddSingleton<LoginViewModel>();
+		builder.Services.AddSingleton<LoginPage>();
+		builder.Services.AddSingleton<ProductsViewModel>();
+		builder.Services.AddSingleton<ProductsPage>();
+		builder.Services.AddSingleton<SignupPage>();
+
+		return builder.Build();
 	}
 }
