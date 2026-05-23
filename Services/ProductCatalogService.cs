@@ -70,7 +70,7 @@ public class ProductCatalogService
             {
                 Name = "Honeycrisp Apples",
                 Category = "Produce",
-                Price = 2.49m,
+                Price = 149.00m,
                 Store = "FreshMart",
                 Unit = "per lb",
                 Description = "Crisp, sweet apples for snacks or pies.",
@@ -80,7 +80,7 @@ public class ProductCatalogService
             {
                 Name = "Almond Milk",
                 Category = "Dairy",
-                Price = 3.79m,
+                Price = 219.00m,
                 Store = "GreenBasket",
                 Unit = "1L",
                 Description = "Unsweetened, dairy-free almond milk.",
@@ -90,7 +90,7 @@ public class ProductCatalogService
             {
                 Name = "Sourdough Loaf",
                 Category = "Bakery",
-                Price = 4.25m,
+                Price = 249.00m,
                 Store = "MarketHub",
                 Unit = "1 loaf",
                 Description = "Artisan sourdough with a crunchy crust.",
@@ -100,7 +100,7 @@ public class ProductCatalogService
             {
                 Name = "Free Range Eggs",
                 Category = "Dairy",
-                Price = 3.99m,
+                Price = 229.00m,
                 Store = "DailyHarvest",
                 Unit = "12 pack",
                 Description = "Omega-3 enriched eggs.",
@@ -110,7 +110,7 @@ public class ProductCatalogService
             {
                 Name = "Penne Pasta",
                 Category = "Pantry",
-                Price = 1.69m,
+                Price = 99.00m,
                 Store = "FreshMart",
                 Unit = "500g",
                 Description = "Bronze-cut pasta with great texture.",
@@ -120,7 +120,7 @@ public class ProductCatalogService
             {
                 Name = "Olive Oil",
                 Category = "Pantry",
-                Price = 8.49m,
+                Price = 499.00m,
                 Store = "GreenBasket",
                 Unit = "500ml",
                 Description = "Extra virgin olive oil for salads and cooking.",
@@ -130,7 +130,7 @@ public class ProductCatalogService
             {
                 Name = "Chicken Breast",
                 Category = "Meat",
-                Price = 6.75m,
+                Price = 389.00m,
                 Store = "MarketHub",
                 Unit = "1 lb",
                 Description = "Lean, boneless chicken breast.",
@@ -140,7 +140,7 @@ public class ProductCatalogService
             {
                 Name = "Granola Mix",
                 Category = "Snacks",
-                Price = 5.39m,
+                Price = 299.00m,
                 Store = "DailyHarvest",
                 Unit = "400g",
                 Description = "Crunchy granola with seeds and berries.",
@@ -150,7 +150,7 @@ public class ProductCatalogService
             {
                 Name = "Sparkling Water",
                 Category = "Beverages",
-                Price = 4.10m,
+                Price = 239.00m,
                 Store = "FreshMart",
                 Unit = "6 pack",
                 Description = "Lime flavored sparkling water.",

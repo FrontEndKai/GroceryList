@@ -63,7 +63,7 @@
                     </Border>
 
                     <Border Style="{StaticResource InputCard}">
-                        <Entry Placeholder="Price" Text="{Binding PriceText}" Keyboard="Numeric" Style="{StaticResource InputEntry}"/>
+                        <Entry Placeholder="Price (₱)" Text="{Binding PriceText}" Keyboard="Numeric" Style="{StaticResource InputEntry}"/>
                     </Border>
 
                     <Border Style="{StaticResource InputCard}">

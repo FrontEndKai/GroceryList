@@ -60,7 +60,7 @@
                         </Border.Behaviors>
                         <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
                             <Label Text="{Binding Store}" FontFamily="OpenSansSemibold" />
-                            <Label Grid.Column="1" Text="{Binding Price, StringFormat='${0:0.00}'}" Style="{StaticResource PriceLabel}" />
+                            <Label Grid.Column="1" Text="{Binding Price, StringFormat='₱{0:N2}'}" Style="{StaticResource PriceLabel}" />
                             <Label Grid.Row="1" Text="{Binding Note}" Style="{StaticResource CaptionLabel}" />
                             <Label Grid.Row="1" Grid.Column="1" Text="Best" TextColor="{StaticResource Primary}"
                                    IsVisible="{Binding IsBest}" FontSize="12" />

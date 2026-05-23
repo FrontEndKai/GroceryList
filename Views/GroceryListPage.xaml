@@ -25,7 +25,7 @@
             </Border.Behaviors>
             <VerticalStackLayout Spacing="8">
                 <Label Text="Your List" Style="{StaticResource DisplayTitle}" />
-                <Label Grid.Column="1" Text="{Binding TotalCost, StringFormat='${0:0.00}'}" Style="{StaticResource MetricLabel}" />
+                <Label Grid.Column="1" Text="{Binding TotalCost, StringFormat='₱{0:N2}'}" Style="{StaticResource MetricLabel}" />
                 <Label Grid.Row="1" Grid.ColumnSpan="2" Text="Tap items to adjust quantities." Style="{StaticResource HeroSubTitle}" />
             </VerticalStackLayout>
         </Border>
@@ -67,7 +67,7 @@
                     </toolkit:AnimationBehavior.AnimationType>
                 </toolkit:AnimationBehavior>
             </Border.Behaviors>
-            <Label Text="{Binding TotalCost, StringFormat='Estimated total: ${0:0.00}'}"
+            <Label Text="{Binding TotalCost, StringFormat='Estimated total: ₱{0:N2}'}"
                    Style="{StaticResource SectionTitle}"
                    VerticalOptions="Center" />
         </Border>

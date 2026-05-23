@@ -60,7 +60,7 @@
                                 </VerticalStackLayout>
                                 <Label Grid.Row="1" Text="{Binding Name}" FontFamily="OpenSansSemibold" FontSize="16" TextColor="{StaticResource Soil}" />
                                 <Grid Grid.Row="2" ColumnDefinitions="*,Auto" RowSpacing="6">
-                                    <Label Text="{Binding Price, StringFormat='${0:0.00}'}" Style="{StaticResource PriceLabel}" />
+                                    <Label Text="{Binding Price, StringFormat='₱{0:N2}'}" Style="{StaticResource PriceLabel}" />
                                     <Label Grid.Column="1" Text="{Binding Unit}" Style="{StaticResource CaptionLabel}" />
                                     <HorizontalStackLayout Grid.Row="1" Grid.ColumnSpan="2" Spacing="8">
                                         <Button Text="View" Style="{StaticResource QuietPillButton}"

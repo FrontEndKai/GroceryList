@@ -54,7 +54,7 @@
                 </Border.Behaviors>
                 <VerticalStackLayout Spacing="12">
                     <Label Text="Price" Style="{StaticResource SectionTitle}" />
-                    <Label Text="{Binding Product.Price}" Style="{StaticResource PriceLabel}" />
+                    <Label Text="{Binding Product.Price, StringFormat='₱{0:N2}'}" Style="{StaticResource PriceLabel}" />
                 </VerticalStackLayout>
             </Border>
 
