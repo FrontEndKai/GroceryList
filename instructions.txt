@@ -1,0 +1,10 @@
+Instructions:
+
+Expected final output at the end of the semester is a working mobile app of your choice with at least 5-10 screens (consists of pages and modals) using the Android platform and framework (.NET MAUI, React Native, Flutter, Native Android or any other) of your choice. Database/back-end integration is a must. There must be CRUD functionalities.
+
+ 
+
+Output:
+
+APK
+Source code (Repo Link)

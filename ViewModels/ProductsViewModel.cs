@@ -2,6 +2,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SmartGroceryList.Interfaces;
 using SmartGroceryList.Models;
+using SmartGroceryList.Views;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -30,6 +31,17 @@ namespace SmartGroceryList.ViewModels
         async Task GetProductsAsync()
         {
             await LoadProductsAsync(resetSearch: false);
+        }
+
+        [RelayCommand]
+        Task GoToAddProductAsync() =>
+            Shell.Current.GoToAsync(nameof(AddProductPage));
+
+        [RelayCommand]
+        Task GoToEditProductAsync(Product product)
+        {
+            if (product == null) return Task.CompletedTask;
+            return Shell.Current.GoToAsync($"{nameof(EditProductPage)}?productId={product.Id}");
         }
 
         public Task ReloadProductsAsync()

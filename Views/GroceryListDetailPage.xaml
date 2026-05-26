@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:SmartGroceryList.ViewModels"
+             x:Class="SmartGroceryList.Views.GroceryListDetailPage"
+             x:DataType="vm:GroceryListDetailViewModel"
+             Title="{Binding Title}"
+             BackgroundColor="{AppThemeBinding Light=#F7FFFE, Dark=#102226}">
+    <RefreshView Command="{Binding ReloadCommand}">
+        <CollectionView ItemsSource="{Binding Items}" SelectionMode="None">
+            <CollectionView.Header>
+                <VerticalStackLayout Padding="20" Spacing="14">
+                    <Border StrokeThickness="0"
+                            StrokeShape="RoundRectangle 28"
+                            Background="{StaticResource PrimaryGradient}"
+                            Padding="24">
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="LIST" TextColor="White" FontSize="12" FontAttributes="Bold" />
+                            <Label Text="{Binding ListName}" TextColor="White" FontSize="24" FontAttributes="Bold" />
+                            <Label TextColor="White" Opacity="0.85">
+                                <Label.Text>
+                                    <MultiBinding StringFormat="{}{0}/{1} purchased">
+                                        <Binding Path="PurchasedCount" />
+                                        <Binding Path="TotalItems" />
+                                    </MultiBinding>
+                                </Label.Text>
+                            </Label>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <Border StrokeThickness="0" StrokeShape="RoundRectangle 22" Background="White" Padding="14">
+                        <VerticalStackLayout Spacing="10">
+                            <Label Text="Add item to list" FontAttributes="Bold" TextColor="#102226" />
+                            <Picker Title="Select product"
+                                    ItemsSource="{Binding AvailableProducts}"
+                                    ItemDisplayBinding="{Binding Name}"
+                                    SelectedItem="{Binding SelectedProduct}" />
+                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                                <Entry Placeholder="Quantity" Keyboard="Numeric" Text="{Binding NewQuantity}" />
+                                <Button Grid.Column="1"
+                                        Text="Add"
+                                        Command="{Binding AddItemCommand}"
+                                        BackgroundColor="#18C2C0"
+                                        TextColor="White"
+                                        CornerRadius="16"
+                                        Padding="18,10" />
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+            </CollectionView.Header>
+
+            <CollectionView.EmptyView>
+                <VerticalStackLayout Padding="20">
+                    <Border StrokeThickness="0" StrokeShape="RoundRectangle 22" Background="White" Padding="20">
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="This list is empty"
+                                   FontSize="18"
+                                   FontAttributes="Bold"
+                                   TextColor="#102226" />
+                            <Label Text="Pick a product above and tap Add."
+                                   TextColor="#6E6E6E" />
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="vm:GroceryListItemDisplay">
+                    <Border StrokeThickness="0"
+                            StrokeShape="RoundRectangle 22"
+                            Background="White"
+                            Padding="14"
+                            Margin="20,0,20,12">
+                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                            <Button Text="✓"
+                                    BackgroundColor="#18C2C0"
+                                    TextColor="White"
+                                    CornerRadius="20"
+                                    WidthRequest="44"
+                                    HeightRequest="44"
+                                    Padding="0"
+                                    FontSize="18"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:GroceryListDetailViewModel}}, Path=TogglePurchasedCommand}"
+                                    CommandParameter="{Binding .}"
+                                    VerticalOptions="Center" />
+
+                            <VerticalStackLayout Grid.Column="1" Spacing="3" VerticalOptions="Center">
+                                <Label Text="{Binding ProductName}"
+                                       FontSize="16"
+                                       FontAttributes="Bold"
+                                       TextColor="#102226" />
+                                <Label Text="{Binding Brand}"
+                                       FontSize="12"
+                                       TextColor="#6E6E6E" />
+                                <Label Text="{Binding Quantity, StringFormat='Qty: {0}'}"
+                                       FontSize="12"
+                                       TextColor="#0E7C86" />
+                            </VerticalStackLayout>
+
+                            <Button Grid.Column="2"
+                                    Text="Remove"
+                                    BackgroundColor="#FFE6E6"
+                                    TextColor="#B00020"
+                                    Padding="14,6"
+                                    CornerRadius="14"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:GroceryListDetailViewModel}}, Path=DeleteItemCommand}"
+                                    CommandParameter="{Binding .}" />
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </RefreshView>
+</ContentPage>

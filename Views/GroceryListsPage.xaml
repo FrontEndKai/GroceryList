@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:SmartGroceryList.Models"
+             xmlns:vm="clr-namespace:SmartGroceryList.ViewModels"
+             x:Class="SmartGroceryList.Views.GroceryListsPage"
+             x:DataType="vm:GroceryListsViewModel"
+             Title="{Binding Title}"
+             BackgroundColor="{AppThemeBinding Light=#F7FFFE, Dark=#102226}">
+    <RefreshView Command="{Binding ReloadCommand}">
+        <CollectionView ItemsSource="{Binding Lists}"
+                        SelectionMode="None">
+            <CollectionView.Header>
+                <VerticalStackLayout Padding="20" Spacing="14">
+                    <Border StrokeThickness="0"
+                            StrokeShape="RoundRectangle 28"
+                            Background="{StaticResource PrimaryGradient}"
+                            Padding="24">
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="GROCERY LISTS"
+                                   TextColor="White"
+                                   FontAttributes="Bold"
+                                   FontSize="12" />
+                            <Label Text="Plan your next shopping trip"
+                                   TextColor="White"
+                                   FontAttributes="Bold"
+                                   FontSize="24" />
+                            <Label Text="{Binding ListsCount, StringFormat='{0} lists saved'}"
+                                   TextColor="White"
+                                   Opacity="0.85" />
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <Border StrokeThickness="0" StrokeShape="RoundRectangle 22" Background="White" Padding="14">
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                            <Entry Placeholder="New list name (e.g. Weekly Shop)"
+                                   Text="{Binding NewListName}" />
+                            <Button Grid.Column="1"
+                                    Text="Add"
+                                    Command="{Binding AddListCommand}"
+                                    BackgroundColor="#18C2C0"
+                                    TextColor="White"
+                                    CornerRadius="16"
+                                    Padding="18,10" />
+                        </Grid>
+                    </Border>
+                </VerticalStackLayout>
+            </CollectionView.Header>
+
+            <CollectionView.EmptyView>
+                <VerticalStackLayout Padding="20">
+                    <Border StrokeThickness="0" StrokeShape="RoundRectangle 22" Background="White" Padding="20">
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="No lists yet"
+                                   FontSize="18"
+                                   FontAttributes="Bold"
+                                   TextColor="#102226" />
+                            <Label Text="Create your first list using the form above."
+                                   TextColor="#6E6E6E" />
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:GroceryList">
+                    <Border StrokeThickness="0"
+                            StrokeShape="RoundRectangle 22"
+                            Background="White"
+                            Padding="16"
+                            Margin="20,0,20,12">
+                        <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="10">
+                            <VerticalStackLayout Spacing="4">
+                                <Label Text="{Binding Name}"
+                                       FontSize="17"
+                                       FontAttributes="Bold"
+                                       TextColor="#102226" />
+                                <Label Text="{Binding CreatedAt, StringFormat='Created {0:MMM d, yyyy}'}"
+                                       FontSize="12"
+                                       TextColor="#6E6E6E" />
+                            </VerticalStackLayout>
+
+                            <Button Grid.Column="1"
+                                    Text="Open"
+                                    BackgroundColor="#EAFDFC"
+                                    TextColor="#0E7C86"
+                                    Padding="14,6"
+                                    CornerRadius="14"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:GroceryListsViewModel}}, Path=OpenListCommand}"
+                                    CommandParameter="{Binding .}" />
+
+                            <Button Grid.Column="2"
+                                    Text="Delete"
+                                    BackgroundColor="#FFE6E6"
+                                    TextColor="#B00020"
+                                    Padding="14,6"
+                                    CornerRadius="14"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:GroceryListsViewModel}}, Path=DeleteListCommand}"
+                                    CommandParameter="{Binding .}" />
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </RefreshView>
+</ContentPage>

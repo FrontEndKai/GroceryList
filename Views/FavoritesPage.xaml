@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:SmartGroceryList.Models"
+             xmlns:vm="clr-namespace:SmartGroceryList.ViewModels"
+             x:Class="SmartGroceryList.Views.FavoritesPage"
+             x:DataType="vm:FavoritesViewModel"
+             Title="{Binding Title}"
+             BackgroundColor="{AppThemeBinding Light=#F7FFFE, Dark=#102226}">
+    <RefreshView Command="{Binding ReloadCommand}">
+        <CollectionView ItemsSource="{Binding FavoriteProducts}" SelectionMode="None">
+            <CollectionView.Header>
+                <VerticalStackLayout Padding="20" Spacing="14">
+                    <Border StrokeThickness="0"
+                            StrokeShape="RoundRectangle 28"
+                            Background="{StaticResource PrimaryGradient}"
+                            Padding="24">
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="FAVORITES" TextColor="White" FontSize="12" FontAttributes="Bold" />
+                            <Label Text="Your saved go-to items" TextColor="White" FontSize="22" FontAttributes="Bold" />
+                            <Label Text="{Binding FavoriteCount, StringFormat='{0} saved'}"
+                                   TextColor="White"
+                                   Opacity="0.85" />
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <Border StrokeThickness="0" StrokeShape="RoundRectangle 22" Background="White" Padding="14">
+                        <VerticalStackLayout Spacing="10">
+                            <Label Text="Save a new favorite" FontAttributes="Bold" TextColor="#102226" />
+                            <Picker Title="Select product"
+                                    ItemsSource="{Binding AvailableProducts}"
+                                    ItemDisplayBinding="{Binding Name}"
+                                    SelectedItem="{Binding SelectedProduct}" />
+                            <Button Text="Add to favorites"
+                                    Command="{Binding AddFavoriteCommand}"
+                                    BackgroundColor="#18C2C0"
+                                    TextColor="White"
+                                    CornerRadius="16"
+                                    Padding="18,10" />
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+            </CollectionView.Header>
+
+            <CollectionView.EmptyView>
+                <VerticalStackLayout Padding="20">
+                    <Border StrokeThickness="0" StrokeShape="RoundRectangle 22" Background="White" Padding="20">
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="No favorites yet"
+                                   FontSize="18"
+                                   FontAttributes="Bold"
+                                   TextColor="#102226" />
+                            <Label Text="Pick a product above to add your first favorite."
+                                   TextColor="#6E6E6E" />
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Product">
+                    <Border StrokeThickness="0"
+                            StrokeShape="RoundRectangle 22"
+                            Background="White"
+                            Padding="14"
+                            Margin="20,0,20,12">
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                            <VerticalStackLayout Spacing="3" VerticalOptions="Center">
+                                <Label Text="{Binding Name}"
+                                       FontSize="16"
+                                       FontAttributes="Bold"
+                                       TextColor="#102226" />
+                                <Label Text="{Binding Brand}"
+                                       FontSize="12"
+                                       TextColor="#6E6E6E" />
+                            </VerticalStackLayout>
+                            <Button Grid.Column="1"
+                                    Text="Remove"
+                                    BackgroundColor="#FFE6E6"
+                                    TextColor="#B00020"
+                                    Padding="14,6"
+                                    CornerRadius="14"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:FavoritesViewModel}}, Path=RemoveFavoriteCommand}"
+                                    CommandParameter="{Binding .}" />
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </RefreshView>
+</ContentPage>

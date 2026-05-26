@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SmartGroceryList.Views.EditProductPage"
+             Title="{Binding Title}"
+             BackgroundColor="{AppThemeBinding Light=#F7FFFE, Dark=#102226}">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="14">
+            <Border StrokeThickness="0"
+                    StrokeShape="RoundRectangle 28"
+                    Background="{StaticResource PrimaryGradient}"
+                    Padding="24">
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="EDIT PRODUCT" TextColor="White" FontSize="12" FontAttributes="Bold" />
+                    <Label Text="Update or remove this item" TextColor="White" FontSize="22" FontAttributes="Bold" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border StrokeThickness="0" StrokeShape="RoundRectangle 22" Background="White" Padding="18">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Name" FontAttributes="Bold" TextColor="#102226" />
+                    <Entry Text="{Binding Name}" />
+
+                    <Label Text="Brand" FontAttributes="Bold" TextColor="#102226" />
+                    <Entry Text="{Binding Brand}" />
+
+                    <Label Text="Description" FontAttributes="Bold" TextColor="#102226" />
+                    <Editor Text="{Binding Description}" HeightRequest="80" AutoSize="TextChanges" />
+
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="Quantity" FontAttributes="Bold" TextColor="#102226" />
+                            <Entry Keyboard="Numeric" Text="{Binding Quantity}" />
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Column="1" Spacing="6">
+                            <Label Text="Unit" FontAttributes="Bold" TextColor="#102226" />
+                            <Entry Text="{Binding UnitOfMeasure}" />
+                        </VerticalStackLayout>
+                    </Grid>
+
+                    <Label Text="Category" FontAttributes="Bold" TextColor="#102226" />
+                    <Picker ItemsSource="{Binding Categories}"
+                            ItemDisplayBinding="{Binding Name}"
+                            SelectedItem="{Binding SelectedCategory}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                <Button Text="Cancel"
+                        Command="{Binding CancelCommand}"
+                        BackgroundColor="#EAFDFC"
+                        TextColor="#0E7C86" />
+                <Button Grid.Column="1"
+                        Text="Save"
+                        Command="{Binding SaveCommand}"
+                        IsEnabled="{Binding IsNotBusy}"
+                        BackgroundColor="#18C2C0"
+                        TextColor="White" />
+            </Grid>
+
+            <Button Text="Delete product"
+                    Command="{Binding DeleteCommand}"
+                    IsEnabled="{Binding IsNotBusy}"
+                    BackgroundColor="#FFE6E6"
+                    TextColor="#B00020" />
+
+            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="#18C2C0" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

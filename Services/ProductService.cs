@@ -21,9 +21,29 @@ namespace SmartGroceryList.Services
             return _db.Table<Product>().ToListAsync();
         }
 
+        public Task<Product?> GetProductByIdAsync(int id)
+        {
+            return _db.Table<Product>().FirstOrDefaultAsync(p => p.Id == id)!;
+        }
+
+        public Task<List<Category>> GetCategoriesAsync()
+        {
+            return _db.Table<Category>().ToListAsync();
+        }
+
         public Task AddProductAsync(Product product)
         {
             return _db.InsertAsync(product);
+        }
+
+        public Task UpdateProductAsync(Product product)
+        {
+            return _db.UpdateAsync(product);
+        }
+
+        public Task DeleteProductAsync(Product product)
+        {
+            return _db.DeleteAsync(product);
         }
 
         public async Task SeedProductsAsync()

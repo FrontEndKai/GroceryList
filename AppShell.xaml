@@ -15,24 +15,19 @@
     Shell.TabBarTitleColor="{StaticResource Primary}"
     Shell.TabBarUnselectedColor="{StaticResource Gray500}">
 
-    <!-- 
-        Login flow will be handled separately. 
-        For now, we go straight to the main app view.
-    -->
-
     <TabBar>
         <ShellContent
-            Title="Dashboard"
+            Title="Catalog"
             ContentTemplate="{DataTemplate views:ProductsPage}"
             Route="ProductsPage" />
         <ShellContent
-            Title="Catalog"
-            ContentTemplate="{DataTemplate views:ProductsPage}" 
+            Title="Lists"
+            ContentTemplate="{DataTemplate views:GroceryListsPage}"
             Route="GroceryListsPage" />
         <ShellContent
-            Title="Lists"
-            ContentTemplate="{DataTemplate views:ProductsPage}" 
-            Route="DashboardPage" />
+            Title="Favorites"
+            ContentTemplate="{DataTemplate views:FavoritesPage}"
+            Route="FavoritesPage" />
     </TabBar>
 
 </Shell>
