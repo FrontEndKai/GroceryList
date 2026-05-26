@@ -13,6 +13,7 @@ namespace SmartGroceryList.ViewModels
     {
         private readonly IProductService _productService;
         private readonly List<Product> _allProducts = new();
+        private readonly Dictionary<int, string> _categoryLookup = new();
         public ObservableCollection<Product> Products { get; } = new();
 
         [ObservableProperty]
@@ -58,6 +59,15 @@ namespace SmartGroceryList.ViewModels
             {
                 IsBusy = true;
                 await _productService.SeedProductsAsync(); // Seed sample data
+                
+                var cats = await _productService.GetCategoriesAsync();
+                _categoryLookup.Clear();
+                foreach (var c in cats)
+                {
+                    if (c != null)
+                        _categoryLookup[c.Id] = c.Name ?? string.Empty;
+                }
+
                 var products = await _productService.GetProductsAsync();
 
                 _allProducts.Clear();
@@ -99,13 +109,15 @@ namespace SmartGroceryList.ViewModels
             var filtered = string.IsNullOrWhiteSpace(SearchText)
                 ? _allProducts
                 : _allProducts.Where(product =>
-                    (product.Name?.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ?? false) ||
-                    (product.Brand?.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ?? false) ||
-                    (product.Description?.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ?? false))
+                        (product.Name?.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ?? false) ||
+                        (product.Brand?.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ?? false) ||
+                        (product.Description?.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ?? false) ||
+                        (_categoryLookup.TryGetValue(product.CategoryId, out var catName) && 
+                         catName.Contains(SearchText, StringComparison.OrdinalIgnoreCase)))
                     .ToList();
 
             Products.Clear();
-            foreach (var product in filtered)
+            foreach (var product in filtered.OrderBy(p => p.Name, StringComparer.OrdinalIgnoreCase))
             {
                 Products.Add(product);
             }

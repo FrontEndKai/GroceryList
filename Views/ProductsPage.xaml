@@ -7,130 +7,59 @@
              x:DataType="vm:ProductsViewModel"
              Title="{Binding Title}"
              BackgroundColor="{AppThemeBinding Light=#F7FFFE, Dark=#102226}">
-    <RefreshView Command="{Binding GetProductsCommand}">
-        <CollectionView ItemsSource="{Binding Products}"
+
+    <Grid RowDefinitions="Auto, *">
+
+        <VerticalStackLayout Grid.Row="0" Padding="20,20,20,10" Spacing="16">
+            <Border StrokeThickness="0"
+                    StrokeShape="RoundRectangle 32"
+                    Background="{StaticResource PrimaryGradient}"
+                    Padding="24">
+                <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,Auto" ColumnSpacing="16">
+                    <VerticalStackLayout Spacing="10">
+                        <Label Text="SMART GROCERY" TextColor="White" FontSize="25" FontAttributes="Bold" />
+                        <Label Text="Your grocery command center" TextColor="White" FontSize="14" FontAttributes="Bold" />
+                    </VerticalStackLayout>
+
+                    <Border Grid.Column="1"
+                            StrokeThickness="0"
+                            StrokeShape="RoundRectangle 26"
+                            Background="#30FFFFFF"
+                            Padding="18"
+                            HorizontalOptions="End"
+                            VerticalOptions="Start">
+                        <VerticalStackLayout Spacing="2" HorizontalOptions="Center">
+                            <Label Text="{Binding ProductCount}" TextColor="White" FontSize="30" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                            <Label Text="items" TextColor="White" FontSize="12" HorizontalTextAlignment="Center" />
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <SearchBar Text="{Binding SearchText, Mode=TwoWay}"
+                       Placeholder="Search products, brands, or categories"
+                       BackgroundColor="White"
+                       TextColor="Black"
+                       PlaceholderColor="#6E6E6E" />
+
+            <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8" VerticalOptions="Center">
+                <Label Text="Featured products" FontSize="20" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#212121, Dark=White}" />
+                <Button Grid.Column="2" Text="+Add" Command="{Binding GoToAddProductCommand}" BackgroundColor="#18C2C0" TextColor="White" CornerRadius="18" Padding="14,10" />
+            </Grid>
+        </VerticalStackLayout>
+
+        <CollectionView Grid.Row="1"
+                        ItemsSource="{Binding Products}"
                         SelectionMode="None"
                         ItemsLayout="VerticalList"
                         Margin="0">
 
-            <CollectionView.Header>
-                <VerticalStackLayout Padding="20" Spacing="16">
-                    <Border StrokeThickness="0"
-                            StrokeShape="RoundRectangle 32"
-                            Background="{StaticResource PrimaryGradient}"
-                            Padding="24">
-                        <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,Auto" ColumnSpacing="16">
-                            <VerticalStackLayout Spacing="10">
-                                <Label Text="SMART GROCERY"
-                                       TextColor="White"
-                                       FontSize="12"
-                                       FontAttributes="Bold" />
-                                <Label Text="Your grocery command center"
-                                       TextColor="White"
-                                       FontSize="28"
-                                       FontAttributes="Bold" />
-                                <Label Text="Everything is now easier to see: products, counts, and quick access in one premium dashboard."
-                                       TextColor="White"
-                                       Opacity="0.9"
-                                       FontSize="14" />
-                            </VerticalStackLayout>
-
-                            <Border Grid.Column="1"
-                                    StrokeThickness="0"
-                                    StrokeShape="RoundRectangle 26"
-                                    Background="#30FFFFFF"
-                                    Padding="18"
-                                    HorizontalOptions="End"
-                                    VerticalOptions="Start">
-                                <VerticalStackLayout Spacing="2" HorizontalOptions="Center">
-                                    <Label Text="{Binding ProductCount}"
-                                           TextColor="White"
-                                           FontSize="30"
-                                           FontAttributes="Bold"
-                                           HorizontalTextAlignment="Center" />
-                                    <Label Text="items"
-                                           TextColor="White"
-                                           FontSize="12"
-                                           HorizontalTextAlignment="Center" />
-                                </VerticalStackLayout>
-                            </Border>
-                        </Grid>
-                    </Border>
-
-                    <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
-                        <Border StrokeThickness="0" StrokeShape="RoundRectangle 22" Background="White" Padding="16">
-                            <VerticalStackLayout Spacing="6">
-                                <Label Text="{Binding ProductCount}" FontSize="24" FontAttributes="Bold" TextColor="#18C2C0" />
-                                <Label Text="Products loaded" FontSize="13" TextColor="#6E6E6E" />
-                            </VerticalStackLayout>
-                        </Border>
-
-                        <Border Grid.Column="1" StrokeThickness="0" StrokeShape="RoundRectangle 22" Background="White" Padding="16">
-                            <VerticalStackLayout Spacing="6">
-                                <Label Text="Live" FontSize="24" FontAttributes="Bold" TextColor="#18C2C0" />
-                                <Label Text="Ready for browsing" FontSize="13" TextColor="#6E6E6E" />
-                            </VerticalStackLayout>
-                        </Border>
-                    </Grid>
-
-                    <SearchBar Text="{Binding SearchText, Mode=TwoWay}"
-                               Placeholder="Search products, brands, or categories"
-                               BackgroundColor="White"
-                               TextColor="Black"
-                               PlaceholderColor="#6E6E6E" />
-
-                    <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8" VerticalOptions="Center">
-                        <Label Text="Featured products"
-                               FontSize="20"
-                               FontAttributes="Bold"
-                               TextColor="{AppThemeBinding Light=#212121, Dark=White}" />
-
-                        <Button Grid.Column="1"
-                                Text="Refresh"
-                                Command="{Binding GetProductsCommand}"
-                                BackgroundColor="#EAFDFC"
-                                TextColor="#0E7C86"
-                                CornerRadius="18"
-                                Padding="14,10" />
-
-                        <Button Grid.Column="2"
-                                Text="+ Add"
-                                Command="{Binding GoToAddProductCommand}"
-                                BackgroundColor="#18C2C0"
-                                TextColor="White"
-                                CornerRadius="18"
-                                Padding="14,10" />
-                    </Grid>
-
-                    <Border StrokeThickness="0"
-                            StrokeShape="RoundRectangle 20"
-                            Background="#EAFDFC"
-                            Padding="16">
-                        <HorizontalStackLayout Spacing="12" VerticalOptions="Center">
-                            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="#18C2C0" />
-                            <Label Text="Pull down to refresh, search instantly, and browse products smoothly."
-                                   FontAttributes="Bold"
-                                   TextColor="#0E7C86"
-                                   VerticalOptions="Center" />
-                        </HorizontalStackLayout>
-                    </Border>
-                </VerticalStackLayout>
-            </CollectionView.Header>
-
             <CollectionView.EmptyView>
                 <VerticalStackLayout Padding="20" Spacing="8">
-                    <Border StrokeThickness="0"
-                            StrokeShape="RoundRectangle 24"
-                            Background="White"
-                            Padding="20">
+                    <Border StrokeThickness="0" StrokeShape="RoundRectangle 24" Background="White" Padding="20">
                         <VerticalStackLayout Spacing="8">
-                            <Label Text="No products found"
-                                   FontSize="18"
-                                   FontAttributes="Bold"
-                                   TextColor="#102226" />
-                            <Label Text="Try clearing the search or loading again."
-                                   FontSize="13"
-                                   TextColor="#6E6E6E" />
+                            <Label Text="No products found" FontSize="18" FontAttributes="Bold" TextColor="#102226" />
+                            <Label Text="Try clearing the search or loading again." FontSize="13" TextColor="#6E6E6E" />
                         </VerticalStackLayout>
                     </Border>
                 </VerticalStackLayout>
@@ -138,36 +67,18 @@
 
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:Product">
-                    <Border StrokeThickness="0"
-                            StrokeShape="RoundRectangle 24"
-                            Background="White"
-                            Padding="16"
-                            Margin="20,0,20,12">
+                    <Border StrokeThickness="0" StrokeShape="RoundRectangle 24" Background="White" Padding="16" Margin="20,0,20,12">
                         <Border.GestureRecognizers>
-                            <TapGestureRecognizer
-                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ProductsViewModel}}, Path=GoToEditProductCommand}"
-                                CommandParameter="{Binding .}" />
+                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ProductsViewModel}}, Path=GoToEditProductCommand}" CommandParameter="{Binding .}" />
                         </Border.GestureRecognizers>
                         <Grid ColumnDefinitions="72,*,Auto" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="14">
-                            <Border WidthRequest="72"
-                                    HeightRequest="72"
-                                    StrokeThickness="0"
-                                    StrokeShape="RoundRectangle 18"
-                                    Background="#E7F8EF">
-                                <Label Text="🍃"
-                                       FontSize="30"
-                                       HorizontalOptions="Center"
-                                       VerticalOptions="Center" />
+                            <Border WidthRequest="72" HeightRequest="72" StrokeThickness="0" StrokeShape="RoundRectangle 18" Background="#E7F8EF">
+                                <Label Text="🍃" FontSize="30" HorizontalOptions="Center" VerticalOptions="Center" />
                             </Border>
 
                             <VerticalStackLayout Grid.Column="1" Spacing="4" VerticalOptions="Center">
-                                <Label Text="{Binding Name}"
-                                       FontSize="18"
-                                       FontAttributes="Bold"
-                                       TextColor="#212121" />
-                                <Label Text="{Binding Brand}"
-                                       FontSize="13"
-                                       TextColor="#6E6E6E" />
+                                <Label Text="{Binding Name}" FontSize="18" FontAttributes="Bold" TextColor="#212121" />
+                                <Label Text="{Binding Brand}" FontSize="13" TextColor="#6E6E6E" />
                                 <Label FontSize="14" FontAttributes="Bold" TextColor="#18C2C0">
                                     <Label.Text>
                                         <MultiBinding StringFormat="{}₱{0:F2} / {1}">
@@ -176,22 +87,15 @@
                                         </MultiBinding>
                                     </Label.Text>
                                 </Label>
-                                <Label Text="{Binding Location}"
-                                       FontSize="12"
-                                       TextColor="#6E6E6E" />
+                                <Label Text="{Binding Location}" FontSize="12" TextColor="#6E6E6E" />
                             </VerticalStackLayout>
 
-                            <Label Grid.Column="2"
-                                   Text=">"
-                                   FontSize="24"
-                                   TextColor="#18C2C0"
-                                   VerticalOptions="Center"
-                                   HorizontalOptions="End" />
+                            <Label Grid.Column="2" Text=">" FontSize="24" TextColor="#18C2C0" VerticalOptions="Center" HorizontalOptions="End" />
                         </Grid>
                     </Border>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
 
         </CollectionView>
-    </RefreshView>
+    </Grid>
 </ContentPage>

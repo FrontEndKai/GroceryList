@@ -36,7 +36,7 @@
                             <Entry Placeholder="New list name (e.g. Weekly Shop)"
                                    Text="{Binding NewListName}" />
                             <Button Grid.Column="1"
-                                    Text="Add"
+                                    Text="+Add"
                                     Command="{Binding AddListCommand}"
                                     BackgroundColor="#18C2C0"
                                     TextColor="White"

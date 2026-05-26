@@ -64,6 +64,13 @@
                             Background="White"
                             Padding="14"
                             Margin="20,0,20,12">
+                        
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer 
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:FavoritesViewModel}}, Path=GoToProductDetailCommand}" 
+                                CommandParameter="{Binding .}" />
+                        </Border.GestureRecognizers>
+                        
                         <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
                             <VerticalStackLayout Spacing="3" VerticalOptions="Center">
                                 <Label Text="{Binding Name}"

@@ -16,5 +16,6 @@ namespace SmartGroceryList.Models
         public string Location { get; set; }
         public string UnitOfMeasure { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public Category Category { get; set; }
     }
 }

@@ -2,6 +2,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SmartGroceryList.Interfaces;
 using SmartGroceryList.Models;
+using SmartGroceryList.Views;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -36,13 +37,17 @@ namespace SmartGroceryList.ViewModels
 
                 var products = await _productService.GetProductsAsync();
                 AvailableProducts.Clear();
-                foreach (var p in products)
+                foreach (var p in products.OrderBy(p => p.Name, StringComparer.OrdinalIgnoreCase))
+                {
                     AvailableProducts.Add(p);
-
+                }
+                
                 var favs = await _favoriteService.GetFavoriteProductsAsync();
                 FavoriteProducts.Clear();
-                foreach (var p in favs)
+                foreach (var p in favs.OrderBy(p => p.Name, StringComparer.OrdinalIgnoreCase))
+                {
                     FavoriteProducts.Add(p);
+                }
 
                 FavoriteCount = FavoriteProducts.Count;
             }
@@ -83,6 +88,13 @@ namespace SmartGroceryList.ViewModels
 
             await _favoriteService.RemoveFavoriteAsync(match);
             await ReloadAsync();
+        }
+        
+        [RelayCommand]
+        private Task GoToProductDetailAsync(Product product)
+        {
+            if (product == null) return Task.CompletedTask;
+            return Shell.Current.GoToAsync($"{nameof(EditProductPage)}?productId={product.Id}");
         }
     }
 }

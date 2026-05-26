@@ -87,7 +87,7 @@ namespace SmartGroceryList.ViewModels
                 _productLookup = products.ToDictionary(p => p.Id);
 
                 AvailableProducts.Clear();
-                foreach (var p in products)
+                foreach (var p in products.OrderBy(p => p.Name, StringComparer.OrdinalIgnoreCase))
                     AvailableProducts.Add(p);
 
                 var items = await _listService.GetItemsForListAsync(ListId);

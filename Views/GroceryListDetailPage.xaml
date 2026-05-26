@@ -6,7 +6,8 @@
              x:DataType="vm:GroceryListDetailViewModel"
              Title="{Binding Title}"
              BackgroundColor="{AppThemeBinding Light=#F7FFFE, Dark=#102226}">
-    <RefreshView Command="{Binding ReloadCommand}">
+    <RefreshView Command="{Binding ReloadCommand}"
+                 Padding="0, 0, 0, 100">
         <CollectionView ItemsSource="{Binding Items}" SelectionMode="None">
             <CollectionView.Header>
                 <VerticalStackLayout Padding="20" Spacing="14">
@@ -47,7 +48,7 @@
                                        FontAttributes="Bold"
                                        TextColor="#0E7C86" />
                                 <Button Grid.Column="2"
-                                        Text="Add"
+                                        Text="+Add"
                                         Command="{Binding AddItemCommand}"
                                         BackgroundColor="#18C2C0"
                                         TextColor="White"
@@ -86,8 +87,8 @@
                                     BackgroundColor="#18C2C0"
                                     TextColor="White"
                                     CornerRadius="20"
-                                    WidthRequest="44"
-                                    HeightRequest="44"
+                                    WidthRequest="20"
+                                    HeightRequest="20"
                                     Padding="0"
                                     FontSize="18"
                                     Command="{Binding Source={RelativeSource AncestorType={x:Type vm:GroceryListDetailViewModel}}, Path=TogglePurchasedCommand}"

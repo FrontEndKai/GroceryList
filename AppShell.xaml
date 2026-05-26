@@ -10,7 +10,7 @@
     TitleColor="{StaticResource Gray900}"
     DisabledColor="{StaticResource Gray500}"
     UnselectedColor="{StaticResource Gray500}"
-    Shell.TabBarBackgroundColor="White"
+    Shell.TabBarBackgroundColor="{StaticResource PrimaryGreenLight}"
     Shell.TabBarForegroundColor="{StaticResource Primary}"
     Shell.TabBarTitleColor="{StaticResource Primary}"
     Shell.TabBarUnselectedColor="{StaticResource Gray500}">
@@ -18,14 +18,17 @@
     <TabBar>
         <ShellContent
             Title="Catalog"
+            Icon="catalog_icon.png"
             ContentTemplate="{DataTemplate views:ProductsPage}"
             Route="ProductsPage" />
         <ShellContent
             Title="Lists"
+            Icon="list_icon.png"
             ContentTemplate="{DataTemplate views:GroceryListsPage}"
             Route="GroceryListsPage" />
         <ShellContent
             Title="Favorites"
+            Icon="fav_icon.png"
             ContentTemplate="{DataTemplate views:FavoritesPage}"
             Route="FavoritesPage" />
     </TabBar>

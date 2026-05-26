@@ -7,7 +7,7 @@
 
     <Color x:Key="Primary">#18C2C0</Color>
     <Color x:Key="PrimaryGreen">#18C2C0</Color>
-    <Color x:Key="PrimaryGreenLight">#D7FBF8</Color>
+    <Color x:Key="PrimaryGreenLight">#91d9d3</Color>
     <Color x:Key="Accent">#0E7C86</Color>
     <Color x:Key="SurfaceLight">#FFFFFF</Color>
     <Color x:Key="SurfaceDark">#102226</Color>
