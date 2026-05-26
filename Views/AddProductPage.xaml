@@ -33,14 +33,17 @@
 
                     <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
                         <VerticalStackLayout Spacing="6">
-                            <Label Text="Quantity" FontAttributes="Bold" TextColor="#102226" />
-                            <Entry Placeholder="1" Keyboard="Numeric" Text="{Binding Quantity}" />
+                            <Label Text="Price (₱)" FontAttributes="Bold" TextColor="#102226" />
+                            <Entry Placeholder="0.00" Keyboard="Numeric" Text="{Binding Price}" />
                         </VerticalStackLayout>
                         <VerticalStackLayout Grid.Column="1" Spacing="6">
                             <Label Text="Unit" FontAttributes="Bold" TextColor="#102226" />
-                            <Entry Placeholder="pcs, kg, pack" Text="{Binding UnitOfMeasure}" />
+                            <Entry Placeholder="kg, pack, dozen" Text="{Binding UnitOfMeasure}" />
                         </VerticalStackLayout>
                     </Grid>
+
+                    <Label Text="Location" FontAttributes="Bold" TextColor="#102226" />
+                    <Entry Placeholder="e.g. Aisle 3" Text="{Binding Location}" />
 
                     <Label Text="Category" FontAttributes="Bold" TextColor="#102226" />
                     <Picker Title="Select a category"

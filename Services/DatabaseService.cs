@@ -3,6 +3,7 @@ using SmartGroceryList.Interfaces;
 using SmartGroceryList.Models;
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace SmartGroceryList.Services
@@ -11,6 +12,23 @@ namespace SmartGroceryList.Services
     {
         private SQLiteAsyncConnection _database;
         private const string DatabaseFilename = "SmartGrocery.db3";
+
+        private static readonly string[] SeedCategoryNames =
+        {
+            "Fruits",
+            "Vegetables",
+            "Meat & Poultry",
+            "Dairy & Eggs",
+            "Bakery",
+            "Pantry",
+            "Beverages",
+            "Snacks",
+            "Household",
+            "Personal Care",
+            "Cleaning Supplies",
+            "Pet Supplies",
+            "Other"
+        };
 
         private static string DatabasePath =>
             Path.Combine(FileSystem.AppDataDirectory, DatabaseFilename);
@@ -35,26 +53,23 @@ namespace SmartGroceryList.Services
             await db.CreateTableAsync<PurchaseHistory>();
             await db.CreateTableAsync<Store>();
             await db.CreateTableAsync<Favorite>();
-            
-            // Seed initial data if needed
+
             await SeedData(db);
         }
 
         private async Task SeedData(SQLiteAsyncConnection db)
         {
-            if (await db.Table<Category>().CountAsync() == 0)
+            var existing = await db.Table<Category>().ToListAsync();
+            var existingNames = existing.Select(c => c.Name).ToHashSet();
+
+            var missing = SeedCategoryNames
+                .Where(name => !existingNames.Contains(name))
+                .Select(name => new Category { Name = name })
+                .ToList();
+
+            if (missing.Count > 0)
             {
-                await db.InsertAllAsync(new Category[]
-                {
-                    new Category { Name = "Fruits" },
-                    new Category { Name = "Vegetables" },
-                    new Category { Name = "Meat & Poultry" },
-                    new Category { Name = "Dairy & Eggs" },
-                    new Category { Name = "Bakery" },
-                    new Category { Name = "Pantry" },
-                    new Category { Name = "Beverages" },
-                    new Category { Name = "Snacks" }
-                });
+                await db.InsertAllAsync(missing);
             }
         }
     }

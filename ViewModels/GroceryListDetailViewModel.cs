@@ -14,12 +14,14 @@ namespace SmartGroceryList.ViewModels
         public GroceryListItem Item { get; }
         public string ProductName { get; }
         public string Brand { get; }
+        public double Price { get; }
 
         public GroceryListItemDisplay(GroceryListItem item, Product? product)
         {
             Item = item;
             ProductName = product?.Name ?? "Unknown product";
             Brand = product?.Brand ?? string.Empty;
+            Price = product?.Price ?? 0;
         }
 
         public bool IsPurchased
@@ -34,6 +36,8 @@ namespace SmartGroceryList.ViewModels
         }
 
         public double Quantity => Item.Quantity;
+        public string UnitOfMeasure => Item.UnitOfMeasure ?? string.Empty;
+        public double LineTotal => Quantity * Price;
     }
 
     [QueryProperty(nameof(ListId), "listId")]
@@ -54,6 +58,7 @@ namespace SmartGroceryList.ViewModels
         [ObservableProperty] private double newQuantity = 1;
         [ObservableProperty] private int totalItems;
         [ObservableProperty] private int purchasedCount;
+        [ObservableProperty] private double totalPrice;
 
         public GroceryListDetailViewModel(IGroceryListService listService, IProductService productService)
         {
@@ -93,13 +98,19 @@ namespace SmartGroceryList.ViewModels
                     Items.Add(new GroceryListItemDisplay(it, prod));
                 }
 
-                TotalItems = Items.Count;
-                PurchasedCount = Items.Count(i => i.IsPurchased);
+                RefreshTotals();
             }
             finally
             {
                 IsBusy = false;
             }
+        }
+
+        private void RefreshTotals()
+        {
+            TotalItems = Items.Count;
+            PurchasedCount = Items.Count(i => i.IsPurchased);
+            TotalPrice = Items.Sum(i => i.LineTotal);
         }
 
         [RelayCommand]
@@ -116,6 +127,7 @@ namespace SmartGroceryList.ViewModels
                 GroceryListId = ListId,
                 ProductId = SelectedProduct.Id,
                 Quantity = NewQuantity <= 0 ? 1 : NewQuantity,
+                UnitOfMeasure = SelectedProduct.UnitOfMeasure ?? string.Empty,
                 IsPurchased = false
             };
             await _listService.AddItemAsync(item);

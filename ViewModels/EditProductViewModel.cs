@@ -20,7 +20,8 @@ namespace SmartGroceryList.ViewModels
         [ObservableProperty] private string? name;
         [ObservableProperty] private string? brand;
         [ObservableProperty] private string? description;
-        [ObservableProperty] private double quantity;
+        [ObservableProperty] private double price;
+        [ObservableProperty] private string? location;
         [ObservableProperty] private string? unitOfMeasure;
         [ObservableProperty] private Category? selectedCategory;
 
@@ -51,7 +52,8 @@ namespace SmartGroceryList.ViewModels
                 Name = _product.Name;
                 Brand = _product.Brand;
                 Description = _product.Description;
-                Quantity = _product.Quantity;
+                Price = _product.Price;
+                Location = _product.Location;
                 UnitOfMeasure = _product.UnitOfMeasure;
                 SelectedCategory = Categories.FirstOrDefault(c => c.Id == _product.CategoryId);
             }
@@ -78,7 +80,8 @@ namespace SmartGroceryList.ViewModels
                 _product.Name = Name!;
                 _product.Brand = Brand ?? string.Empty;
                 _product.Description = Description ?? string.Empty;
-                _product.Quantity = Quantity;
+                _product.Price = Price < 0 ? 0 : Price;
+                _product.Location = Location ?? string.Empty;
                 _product.UnitOfMeasure = UnitOfMeasure ?? string.Empty;
                 _product.CategoryId = SelectedCategory?.Id ?? _product.CategoryId;
 

@@ -168,9 +168,17 @@
                                 <Label Text="{Binding Brand}"
                                        FontSize="13"
                                        TextColor="#6E6E6E" />
-                                <Label Text="{Binding Quantity, StringFormat='Qty: {0}'}"
-                                       FontSize="13"
-                                       TextColor="#18C2C0" />
+                                <Label FontSize="14" FontAttributes="Bold" TextColor="#18C2C0">
+                                    <Label.Text>
+                                        <MultiBinding StringFormat="{}₱{0:F2} / {1}">
+                                            <Binding Path="Price" />
+                                            <Binding Path="UnitOfMeasure" />
+                                        </MultiBinding>
+                                    </Label.Text>
+                                </Label>
+                                <Label Text="{Binding Location}"
+                                       FontSize="12"
+                                       TextColor="#6E6E6E" />
                             </VerticalStackLayout>
 
                             <Label Grid.Column="2"

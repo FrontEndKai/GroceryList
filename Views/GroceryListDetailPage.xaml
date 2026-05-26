@@ -25,6 +25,10 @@
                                     </MultiBinding>
                                 </Label.Text>
                             </Label>
+                            <Label Text="{Binding TotalPrice, StringFormat='Total: ₱{0:F2}'}"
+                                   TextColor="White"
+                                   FontSize="20"
+                                   FontAttributes="Bold" />
                         </VerticalStackLayout>
                     </Border>
 
@@ -35,9 +39,14 @@
                                     ItemsSource="{Binding AvailableProducts}"
                                     ItemDisplayBinding="{Binding Name}"
                                     SelectedItem="{Binding SelectedProduct}" />
-                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                            <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="10">
                                 <Entry Placeholder="Quantity" Keyboard="Numeric" Text="{Binding NewQuantity}" />
-                                <Button Grid.Column="1"
+                                <Label Grid.Column="1"
+                                       Text="{Binding SelectedProduct.UnitOfMeasure}"
+                                       VerticalOptions="Center"
+                                       FontAttributes="Bold"
+                                       TextColor="#0E7C86" />
+                                <Button Grid.Column="2"
                                         Text="Add"
                                         Command="{Binding AddItemCommand}"
                                         BackgroundColor="#18C2C0"
@@ -83,19 +92,43 @@
                                     FontSize="18"
                                     Command="{Binding Source={RelativeSource AncestorType={x:Type vm:GroceryListDetailViewModel}}, Path=TogglePurchasedCommand}"
                                     CommandParameter="{Binding .}"
-                                    VerticalOptions="Center" />
+                                    VerticalOptions="Center">
+                                <Button.Triggers>
+                                    <DataTrigger TargetType="Button" Binding="{Binding IsPurchased}" Value="False">
+                                        <Setter Property="BackgroundColor" Value="#E0E0E0" />
+                                        <Setter Property="TextColor" Value="#9E9E9E" />
+                                    </DataTrigger>
+                                </Button.Triggers>
+                            </Button>
 
                             <VerticalStackLayout Grid.Column="1" Spacing="3" VerticalOptions="Center">
                                 <Label Text="{Binding ProductName}"
                                        FontSize="16"
                                        FontAttributes="Bold"
-                                       TextColor="#102226" />
+                                       TextColor="#102226">
+                                    <Label.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding IsPurchased}" Value="True">
+                                            <Setter Property="TextDecorations" Value="Strikethrough" />
+                                            <Setter Property="TextColor" Value="#9E9E9E" />
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
                                 <Label Text="{Binding Brand}"
                                        FontSize="12"
                                        TextColor="#6E6E6E" />
-                                <Label Text="{Binding Quantity, StringFormat='Qty: {0}'}"
+                                <Label FontSize="12" TextColor="#0E7C86">
+                                    <Label.Text>
+                                        <MultiBinding StringFormat="{}{0} {1} × ₱{2:F2}">
+                                            <Binding Path="Quantity" />
+                                            <Binding Path="UnitOfMeasure" />
+                                            <Binding Path="Price" />
+                                        </MultiBinding>
+                                    </Label.Text>
+                                </Label>
+                                <Label Text="{Binding LineTotal, StringFormat='Subtotal: ₱{0:F2}'}"
                                        FontSize="12"
-                                       TextColor="#0E7C86" />
+                                       FontAttributes="Bold"
+                                       TextColor="#18C2C0" />
                             </VerticalStackLayout>
 
                             <Button Grid.Column="2"
