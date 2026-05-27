@@ -15,18 +15,18 @@ namespace SmartGroceryList.Services
 
         private static readonly string[] SeedCategoryNames =
         {
-            "Fruits",
-            "Vegetables",
-            "Meat & Poultry",
-            "Dairy & Eggs",
-            "Bakery",
-            "Pantry",
-            "Beverages",
-            "Snacks",
-            "Household",
-            "Personal Care",
-            "Cleaning Supplies",
-            "Pet Supplies",
+            "Fruits & Vegetables", 
+            "Dairy & Eggs",        
+            "Bakery & Bread",      
+            "Beverages",           
+            "Pantry Essentials",   
+            "Grains & Rice",       
+            "Coffee & Tea",        
+            "Meat & Poultry",      
+            "Household Items",     
+            "Personal Care",       
+            "Cleaning Supplies",   
+            "Pet Care",
             "Other"
         };
 
@@ -37,6 +37,7 @@ namespace SmartGroceryList.Services
         {
             if (_database == null)
             {
+                // Clean, non-blocking connection initialization
                 _database = new SQLiteAsyncConnection(DatabasePath, SQLiteOpenFlags.Create | SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.SharedCache);
             }
             return _database;
@@ -45,10 +46,12 @@ namespace SmartGroceryList.Services
         public async Task Init()
         {
             var db = GetConnection();
+            
+            // Initialize all tables smoothly on background threads
             await db.CreateTableAsync<User>();
             await db.CreateTableAsync<Product>();
             await db.CreateTableAsync<Category>();
-            await db.CreateTableAsync<GroceryList>();
+            await db.CreateTableAsync<GroceryList>(); // Make sure this table is explicitly here!
             await db.CreateTableAsync<GroceryListItem>();
             await db.CreateTableAsync<PurchaseHistory>();
             await db.CreateTableAsync<Store>();

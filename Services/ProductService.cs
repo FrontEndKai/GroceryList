@@ -1,6 +1,7 @@
 using SmartGroceryList.Interfaces;
 using SmartGroceryList.Models;
 using SQLite;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -28,7 +29,7 @@ namespace SmartGroceryList.Services
 
         public Task<List<Category>> GetCategoriesAsync()
         {
-            return _db.Table<Category>().ToListAsync();
+            return _db.QueryAsync<Category>("SELECT * FROM Category");
         }
 
         public Task AddProductAsync(Product product)
@@ -48,44 +49,31 @@ namespace SmartGroceryList.Services
 
         public async Task SeedProductsAsync()
         {
-            var seedProducts = new List<Product>
+            // Keep this: We still want to build the database tables on startup
+            await _db.CreateTableAsync<Category>();
+            await _db.CreateTableAsync<Product>();
+    
+            // Keep this: We still want the category options (Fruits, Dairy, etc.) available for when users create items
+            var existingCategories = await _db.Table<Category>().ToListAsync();
+            if (existingCategories.Count == 0)
             {
-                
-            };
-
-            var existingProducts = await _db.Table<Product>().ToListAsync();
-            var seedByName = seedProducts.ToDictionary(p => p.Name);
-
-            foreach (var existing in existingProducts)
-            {
-                if (!seedByName.TryGetValue(existing.Name, out var seed)) continue;
-
-                var changed = false;
-                if (existing.Price <= 0)
+                var seedCategories = new List<Category>
                 {
-                    existing.Price = seed.Price;
-                    changed = true;
-                }
-                if (string.IsNullOrWhiteSpace(existing.Location))
-                {
-                    existing.Location = seed.Location;
-                    changed = true;
-                }
-                if (string.IsNullOrWhiteSpace(existing.UnitOfMeasure))
-                {
-                    existing.UnitOfMeasure = seed.UnitOfMeasure;
-                    changed = true;
-                }
-
-                if (changed) await _db.UpdateAsync(existing);
-            }
-
-            var existingNames = existingProducts.Select(product => product.Name).ToHashSet();
-            var missingProducts = seedProducts.Where(product => !existingNames.Contains(product.Name)).ToList();
-
-            if (missingProducts.Count > 0)
-            {
-                await _db.InsertAllAsync(missingProducts);
+                    new Category { Id = 1, Name = "Fruits & Vegetables" },
+                    new Category { Id = 2, Name = "Dairy & Eggs" },
+                    new Category { Id = 3, Name = "Bakery & Bread" },
+                    new Category { Id = 4, Name = "Beverages" },
+                    new Category { Id = 5, Name = "Pantry Essentials" },
+                    new Category { Id = 6, Name = "Grains & Rice" },
+                    new Category { Id = 7, Name = "Coffee & Tea" },
+                    new Category { Id = 8, Name = "Snacks & Candies" },
+                    new Category { Id = 9, Name = "Meat & Poultry" },
+                    new Category { Id = 10, Name = "Household Items" },
+                    new Category { Id = 11, Name = "Personal Care" },
+                    new Category { Id = 12, Name = "Cleaning Supplies" },
+                    new Category { Id = 13, Name = "Pet Care" }
+                };
+                await _db.InsertAllAsync(seedCategories);
             }
         }
     }

@@ -3,6 +3,8 @@ using System;
 
 namespace SmartGroceryList.Models
 {
+    [Table("Product")]
+    [Microsoft.Maui.Controls.Internals.Preserve(AllMembers = true)]
     public class Product
     {
         [PrimaryKey, AutoIncrement]
@@ -16,6 +18,7 @@ namespace SmartGroceryList.Models
         public string Location { get; set; }
         public string UnitOfMeasure { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        [Ignore]
         public Category Category { get; set; }
     }
 }
