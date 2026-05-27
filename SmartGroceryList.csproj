@@ -43,6 +43,12 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
+
+		<AndroidKeyStore>True</AndroidKeyStore>
+		<AndroidSigningKeyStore>SmartGrocery.keystore</AndroidSigningKeyStore>
+		<AndroidSigningKeyAlias>smartgrocery</AndroidSigningKeyAlias>
+		<AndroidSigningKeyPass>password123</AndroidSigningKeyPass>
+		<AndroidSigningStorePass>password123</AndroidSigningStorePass>
 	</PropertyGroup>
 
 	<ItemGroup>
